@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="screen.css">
+    <title>Create Loan</title>
+  </head>
+
+  <body>
+    <div class="banner">
+      <p><a id="bannerTextLogo" href=".">CICO</a></p>
+      <p><a id="bannerSignOut" href=".">Sign Out</a></p>
+    </div>
+
+
+    <main>
+      <h1>Create Loan</h1>
+      <form id="loanTerms">
+        <label for="balance">Loan Amount:</label>
+        <input type="number" id="balance" name="balance" placeholder="$" required>
+
+        <label for="interestRate">Interest Rate:</label>
+        <input type="number" id="interestRate" name="interestRate" placeholder="%"required>
+
+        <label for="lender">Lender:</label>
+        <input type="text" id="lender" name="lender" placeholder="Full Name"required>
+
+        <label for="lendee">Lendee:</label>
+        <input type="text" id="lendee" name="lendee" placeholder="Full Name"required>
+
+        <label for="monthlyPayment">Monthly Payment Amount:</label>
+        <input type="number" id="monthlyPayment" name="monthlyPayment" placeholder="$" required>
+
+        <label for="startDate">Repayment Start Date:</label>
+        <input type="date" id="startDate" name="startDate" required>
+
+        <button id="showButton" type="submit" onclick="window.location.href = 'loandetails.html';">Confirm Details ></button>
+      </form>
+    </main>
+
+    <footer>
+      <p>&copy; 2023 TOCA. All rights reserved.</p>
+    </footer>
+  
+    <script src="createloan.js"></script>
+
+  </body>
+
+
+
+</html>
