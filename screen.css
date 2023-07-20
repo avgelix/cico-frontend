@@ -112,17 +112,27 @@
     background-color: #fff;
     border: none;
     text-decoration: underline;
+    color: black;
   }
-
 
   .sidebar {
     width: 200px;
     background-color: #f0f0f0;
     margin-top: 0px;
+    padding-left: 0px;
+    margin-left:0px;
+  }
+
+  .sidebar ul {
+    padding-left: 0px;
   }
   .sidebar ul > li {
     list-style: none;
     padding-top: 20px;
+  }
+
+  .sidebar ul > li > a {
+    padding-left: 40px;
   }
 
   .sidebar a {
@@ -137,8 +147,8 @@
     background-color: lightgreen;
   }
 
-  .sidebar > a:target {
-    background-color: lightgreen;
+  .sidebarClick:focus {
+    background-color: lightgrey;
     text-decoration: underline;
   }
 
