@@ -148,14 +148,57 @@
   }
 
   .sidebarClick:focus {
-    background-color: lightgrey;
+    background-color: lightgray;
     text-decoration: underline;
   }
 
   #activeLoansContent {
-    margin-left: 60px; /* Make sure content doesn't overlap with the sidebar */
+    margin-left: 10px; /* Make sure content doesn't overlap with the sidebar */
     padding: 20px;
     margin-top: 0px;
+    display: grid;
+    margin-right: 11%;
+    padding: 20px;
+    padding-top: 0px;
+}
+
+.loan {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    padding-bottom:10px;
+    margin-top: 0px;
+    border-bottom: #333;
+    border-bottom-width: 0.5px;
+    border-bottom-style: solid;
+}
+
+.activeLoansHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-top: -21px;
+}
+
+.headerContent {
+  display: flex; /* Display the h2 and p on the same line */
+  align-items: center; /* Align h2 and p vertically within the headerContent div */
+}
+
+.headerContent h2 {
+  font-size: 30px;
+  margin-right: 10px; /* Add horizontal space between the h2 and p */
+}
+
+.loan h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.loan p {
+    font-size: 16px;
   }
 
   #activeLoans > body {
