@@ -1,0 +1,8 @@
+{
+    "realm": "cico",
+    "auth-server-url": "http://127.0.0.1:8089/auth/",
+    "ssl-required": "none",
+    "resource": "cico-client1",
+    "public-client": true,
+    "confidential-port": 0
+  }

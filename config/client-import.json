@@ -1,0 +1,12 @@
+{
+    "clientId": "dummy-frontend",
+    "rootUrl": "http://localhost:8080/dummy-frontend",
+    "enabled": true,
+    "redirectUris": [
+        "http://localhost:8080/dummy-frontend/*"
+    ],
+    "webOrigins": [
+        "http://localhost:8080"
+    ],
+    "publicClient": true
+}
