@@ -13,5 +13,43 @@
             <button name="bannerSignOut" id="bannerSignOut" onclick="logoutAndRedirect()">Logout</button>
         </div>
 
+        <main>
+            <h1>Enter Loan Details</h1>
+            <p>Just a couple of questions before we make it happen</p>
+
+            <form id="paymentDetails">
+                <label for="payment">Payment Amount:</label>
+                <input type="number" id="payment" oninput="displayDetails()" name="payment" placeholder="$" required>
+            </form>
+
+            <div id="paymentContainer">
+                <!-- TODO: display response from POST request about how much of the payment amount goes to interest/principal -->
+            </div>
+
+            <div id="paymentAmort" class="hidden">  
+                <h2>Amortization Table</h2>
+                <table id="amorTable">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Total payment amount</th>
+                            <th>Amount to interest</th>
+                            <th>Amount to principal</th>
+                            <th>Remaining loan balance</th>
+                            <th>Payment Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>  
+
+            <form action="paymentsuccess.html">
+                <button type="submit">Confirm Payment ></button>
+            </form>
+
+        </main>
+
+        <script src="makepayment.js" ></script>
     </body>
 </html>
