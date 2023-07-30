@@ -279,4 +279,18 @@ button#bannerSignOut {
     display: none;
   }
   
+  .loanInfo {
+    display: flex;
+    place-content: space-between;
+    margin-bottom: 20px;
+    margin-top: 0;
+  }
+
+  .loanInfo > * {
+    margin-top: 0;
+  }
+
+  .bold {
+    font-weight: 600;
+  }
   

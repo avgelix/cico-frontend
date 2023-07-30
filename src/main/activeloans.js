@@ -12,11 +12,43 @@ function showContent(option) {
 
                 <div class="loan">
                     <h2>Loan #1</h2>
-                    <p>View more details</p>
+                    <div class="loanInfo">
+                        <div>
+                            <p class="bold">Principal</p>
+                            <p>...</p>
+                        </div>
+
+                        <div>   
+                            <p class="bold">Interest Rate</p>
+                            <p>...</p>
+                        </div>
+
+                        <div>
+                            <p class="bold">Lendee</p>
+                            <p>...</p>
+                        </div>
+                    </div>
+                    <p><a id="viewLoan" href="activeloans.html">View more details ></a></p>
                 </div>
                 <div class="loan">
                     <h2>Loan #2</h2>
-                    <p>View more details</p>
+                    <div class="loanInfo">
+                        <div>
+                            <p class="bold">Principal</p>
+                            <p>...</p>
+                        </div>
+
+                        <div>   
+                            <p class="bold">Interest Rate</p>
+                            <p>...</p>
+                        </div>
+
+                        <div>
+                            <p class="bold">Lendee</p>
+                            <p>...</p>
+                        </div>
+                    </div>
+                    <p><a id="viewLoan" href="activeloans.html">View more details ></a></p>
                 </div>
             `;
             break;
@@ -29,14 +61,46 @@ function showContent(option) {
                 
                 <div class="loan">
                     <h2>Loan #1</h2>
-                    <p>View more details</p>
+                    <div class="loanInfo">
+                        <div>
+                            <p class="bold">Principal</p>
+                            <p>...</p>
+                        </div>
+
+                        <div>   
+                            <p class="bold">Interest Rate</p>
+                            <p>...</p>
+                        </div>
+
+                        <div>
+                            <p class="bold">Lender</p>
+                            <p>...</p>
+                        </div>
+                    </div>
+                    <p><a id="viewLoan" href="activeloans.html">View more details ></a></p>
                     <form action="makepayment.html">
                         <button id="makePaymentButton" type="submit">Make a payment</button>
                     </form>
                 </div>
                 <div class="loan">
                     <h2>Loan #2</h2>
-                    <p>View more details</p>
+                    <div class="loanInfo">
+                        <div>
+                            <p class="bold">Principal</p>
+                            <p>...</p>
+                        </div>
+
+                        <div>   
+                            <p class="bold">Interest Rate</p>
+                            <p>...</p>
+                        </div>
+
+                        <div>
+                            <p class="bold">Lender</p>
+                            <p>...</p>
+                        </div>
+                    </div>
+                    <p><a id="viewLoan" href="activeloans.html">View more details > ></a></p>
                     <form action="makepayment.html">
                         <button id="makePaymentButton" type="submit">Make a payment</button>
                     </form>
