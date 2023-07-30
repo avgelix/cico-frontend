@@ -11,12 +11,12 @@ function showContent(option) {
                 </div>
 
                 <div class="loan">
-                    <h2>Loan 1</h2>
-                    <p>Loan details</p>
+                    <h2>Loan #1</h2>
+                    <p>View more details</p>
                 </div>
                 <div class="loan">
-                    <h2>Loan 2</h2>
-                    <p>Loan details</p>
+                    <h2>Loan #2</h2>
+                    <p>View more details</p>
                 </div>
             `;
             break;
@@ -26,13 +26,20 @@ function showContent(option) {
                     <div class="headerContent"> <h2>Total To Pay:</h2> <p> $6000</p></div>
                     <div class="headerContent"> <h2>Interest Saved to Date:</h2> <p> $1000</p></div>
                 </div>
-                <div class="grid-item loan">
-                    <h2>Loan 1</h2>
-                    <p>Loan details</p>
+                
+                <div class="loan">
+                    <h2>Loan #1</h2>
+                    <p>View more details</p>
+                    <form action="makepayment.html">
+                        <button id="makePaymentButton" type="submit">Make a payment</button>
+                    </form>
                 </div>
-                <div class="grid-item loan">
-                    <h2>Loan 2</h2>
-                    <p>Loan details</p>
+                <div class="loan">
+                    <h2>Loan #2</h2>
+                    <p>View more details</p>
+                    <form action="makepayment.html">
+                        <button id="makePaymentButton" type="submit">Make a payment</button>
+                    </form>
                 </div>
             `;
             break;

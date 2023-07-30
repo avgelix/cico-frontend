@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     if (requestData) {
-        fetch('http://localhost:3000/dummy-backend/createLoan', {
+        fetch('http://localhost:3000/service/createLoan', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -34,13 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
             //responseContainer.textContent = JSON.stringify(data);
             responseContainer.innerHTML = 
             `Loan Amount: $${data.response.balance}<br>` +
-            `Interest: ${data.response.periodicInterest.toFixed(2)}%<br>` +
+            `Periodic Interest: ${data.response.periodicInterest.toFixed(3)}%<br>` +
             `Lender: ` + lender + `<br>` +
             `Lendee: ` + lendee + `<br>` +
             `Repayment Start Date: ` + formattedStartDate + `<br>` +
             `Monthly Payment: $${data.response.periodicPayment.toFixed(1)}<br>` +
-            `Total To Pay: $${data.response.totalPayment.toFixed(1)}<br>` +
-            `Total Interest: $${data.response.totalInterest.toFixed(1)}<br>` +
+            `Total To Pay: $${data.response.totalPayment.toFixed(2)}<br>` +
+            `Total Interest: $${data.response.totalInterest.toFixed(2)}<br>` +
             `Payoff Date: ` + formattedPayoffDate + `<br>` +
             `Schedule:<br><br>`;
 
@@ -59,19 +59,19 @@ document.addEventListener('DOMContentLoaded', () => {
             row.appendChild(indexCell);
 
             const totalCell = document.createElement('td');
-            totalCell.textContent = `$` + (item.interest+item.principal).toFixed(1);
+            totalCell.textContent = `$` + (item.interest+item.principal).toFixed(2);
             row.appendChild(totalCell);
             
             const interestCell = document.createElement('td');
-            interestCell.textContent = `$` + item.interest.toFixed(1);
+            interestCell.textContent = `$` + item.interest.toFixed(2);
             row.appendChild(interestCell);
 
             const principalCell = document.createElement('td');
-            principalCell.textContent = `$` + item.principal.toFixed(1);
+            principalCell.textContent = `$` + item.principal.toFixed(2);
             row.appendChild(principalCell);
 
             const remainingBalanceCell = document.createElement('td');
-            remainingBalanceCell.textContent = `$` + item.remainingBalance.toFixed(1);
+            remainingBalanceCell.textContent = `$` + item.remainingBalance.toFixed(2);
             row.appendChild(remainingBalanceCell);
 
             const dateCell = document.createElement('td');

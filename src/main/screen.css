@@ -93,15 +93,6 @@
     flex: 1;
   }
 
-  #bannerSignOut {
-    font-size: 16px;
-    font-weight: 600;
-    padding-right: 50px;
-    text-decoration: none;
-    color:#fff;
-    flex: 1;
-    letter-spacing: 0.5px;
-  }
 
   main {
     padding-top: 80px; /* Add spacing to prevent content from being hidden behind the banner */ 
@@ -150,6 +141,7 @@
   .sidebarClick:focus {
     background-color: lightgray;
     text-decoration: underline;
+    outline: none;
   }
 
   #activeLoansContent {
@@ -160,6 +152,40 @@
     margin-right: 11%;
     padding: 20px;
     padding-top: 0px;
+}
+
+button#bannerSignOut {
+  /* Remove default button styles */
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  padding-right: 50px;
+  margin: 0;
+  cursor: pointer;
+
+  /* Make it look like a "p" element */
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  color:#fff;
+  letter-spacing: 0.5px;
+  font-family: inherit;
+}
+#loginBtn {
+  /*position: fixed;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: fit-content;*/
+ 
+  display: block;
+  margin: auto;
+  width: fit-content;
+  padding: 10px;
+}
+
+#roles {
+  margin-top: 100px;
 }
 
 .loan {
@@ -214,3 +240,35 @@
     padding-top: 0px;
     flex: 1;
   }
+
+  #successLoan {
+    display: block;
+    margin: auto;
+    margin-top: 150px;
+    width: fit-content;
+    text-align: center;
+  }
+
+  #makePaymentButton {
+    background-color: blue;
+    color: white;
+    margin-top: 10px;
+  }
+
+ #homeFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  #rightDiv {
+    display: flex;
+    display: block;
+    margin-top: 0;
+  }
+
+  #roles {
+    margin-top: 0;
+  }
+  
+  

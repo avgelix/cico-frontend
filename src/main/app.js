@@ -12,6 +12,10 @@ function authenticated() {
     document.getElementById('message').innerHTML = 'User: ' + keycloak.tokenParsed['preferred_username'];
 }
 
+function logoutAndRedirect() {
+    keycloak.logout({ redirectUri: 'http://localhost:8080/dummy-frontend' });
+  }
+
 function request(endpoint) {
     var req = function() {
         var req = new XMLHttpRequest();
@@ -30,7 +34,7 @@ function request(endpoint) {
                 if (req.status == 200) {
                     try {
                         console.log(req);
-                        output.innerHTML = 'Message: ' + JSON.parse(req.responseText).message;
+                        output.innerHTML = 'Success: ' + JSON.parse(req.responseText).message;
                         // Process responseData
                       } catch (error) {
                         // Handle the parsing error (e.g., show an error message, fallback to default value, etc.)
@@ -42,7 +46,7 @@ function request(endpoint) {
                     console.log(req);
                     console.log(req.status + ' ' + req.statusText);
                     
-                    output.innerHTML = '<span class="error">You do not have the necessary permissions to access Cico. Sorry :( </span>';
+                    output.innerHTML = '<span class="error">You do not have the necessary permissions to access Cico this way. Sorry :( </span>';
                 }
             }
         };
@@ -63,7 +67,10 @@ window.onload = function () {
     init.then(function () {
         if (keycloak.authenticated) {
             authenticated();
+            console.log("authenticated");
+            window.location.href = 'home.html';
         } else {
+            console.log("nope");
             notAuthenticated();
         }
 

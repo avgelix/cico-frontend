@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const requestData = {
             monthlyPayment: monthlyPaymentInput,
             method: 'mortgage',
-            apr: interestRateInput *100,
+            apr: interestRateInput,
             balance: balanceInput,
             loanTerm: Math.ceil(balanceInput / monthlyPaymentInput),
             date: startDateInput

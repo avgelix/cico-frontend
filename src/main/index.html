@@ -4,31 +4,38 @@
     <meta charset="UTF-8">
     <title>Keycloak Example App</title>
 
-    <link rel="stylesheet" type="text/css" href="styles.css"/>
+    <link rel="stylesheet" type="text/css" href="screen.css"/>
 
     <script src="keycloak.js"></script>
     <script src="app.js"></script>
 </head>
 
 <body>
-    <div class="wrapper">
-        <div id="not-authenticated" class="menu">
-            <button name="loginBtn" onclick="keycloak.login()">Login</button>
-        </div>
+    <main>
+        <div class="wrapper">
+            <div class="banner">
+                <p><a id="bannerTextLogo" href=".">CICO</a></p>
+            </div>
 
-        <div id="authenticated" class="menu">
-            <button name="logoutBtn" onclick="keycloak.logout()">Logout</button>
-            <button name="accountBtn" onclick="keycloak.accountManagement()">Account</button>
-        </div>
+            <div id="not-authenticated" class="menu">
+                <button id="loginBtn" name="loginBtn" onclick="keycloak.login()">Login</button>
+            </div>
 
-        <div class="content">
-            <button name="publicBtn" onclick="request('public')">Invoke Public</button>
-            <button name="securedBtn" onclick="request('secured')">Invoke Secured</button>
-            <button name="adminBtn" onclick="request('admin')">Invoke Admin</button>
+            <div id="authenticated" class="menu">
+                <button name="logoutBtn" onclick="keycloak.logout()">Logout</button>
+                <button name="accountBtn" onclick="keycloak.accountManagement()">Account</button>
+            </div>
 
+            <div class="content">    
+                <button name="publicBtn" onclick="request('public')">Invoke Public</button>
+                <button name="securedBtn" onclick="request('secured')">Invoke Secured</button>
+                <button name="adminBtn" onclick="request('admin')">Invoke Admin</button>
+            </div>
+        
             <div class="message" id="message"></div>
+
         </div>
-    </div>
+    </main>
 </body>
 
 </html>
