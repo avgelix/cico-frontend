@@ -14,7 +14,7 @@ function showContent(option) {
                     <h2>Loan #1</h2>
                     <div class="loanInfo">
                         <div>
-                            <p class="bold">Principal</p>
+                            <p class="bold">Lendee</p>
                             <p>...</p>
                         </div>
 
@@ -24,27 +24,27 @@ function showContent(option) {
                         </div>
 
                         <div>
-                            <p class="bold">Lendee</p>
+                            <p class="bold">Principal</p>
                             <p>...</p>
                         </div>
                     </div>
                     <p><a id="viewLoan" href="activeloans.html">View more details ></a></p>
                 </div>
                 <div class="loan">
-                    <h2>Loan #2</h2>
+                    <h2>Loan #1</h2>
                     <div class="loanInfo">
                         <div>
-                            <p class="bold">Principal</p>
+                            <p class="bold">Lendee</p>
                             <p>...</p>
                         </div>
-
+                        
                         <div>   
                             <p class="bold">Interest Rate</p>
                             <p>...</p>
                         </div>
 
                         <div>
-                            <p class="bold">Lendee</p>
+                            <p class="bold">Principal</p>
                             <p>...</p>
                         </div>
                     </div>
@@ -63,47 +63,64 @@ function showContent(option) {
                     <h2>Loan #1</h2>
                     <div class="loanInfo">
                         <div>
-                            <p class="bold">Principal</p>
+                            <p class="bold">Lender</p>
                             <p>...</p>
                         </div>
-
+                        
                         <div>   
                             <p class="bold">Interest Rate</p>
                             <p>...</p>
                         </div>
 
                         <div>
-                            <p class="bold">Lender</p>
+                            <p class="bold">Principal</p>
                             <p>...</p>
                         </div>
+
+                        <div>
+                            <p class="bold">Next Payment Due</p>
+                            <p>Date: mm/dd/yy</p>
+                            <p>Amount: $</p>
+                        </div>
                     </div>
-                    <p><a id="viewLoan" href="activeloans.html">View more details ></a></p>
-                    <form action="makepayment.html">
-                        <button id="makePaymentButton" type="submit">Make a payment</button>
-                    </form>
+                    <div class="loanActions">
+                        <p><a id="viewLoan" href="activeloans.html">View more details > </a></p>
+                        <form action="makepayment.html">
+                            <button id="makePaymentButton" type="submit">Make a payment</button>
+                        </form>
+                    </div>
                 </div>
                 <div class="loan">
-                    <h2>Loan #2</h2>
+                    <h2>Loan #1</h2>
                     <div class="loanInfo">
                         <div>
-                            <p class="bold">Principal</p>
+                            <p class="bold">Lender</p>
                             <p>...</p>
                         </div>
-
+                        
                         <div>   
                             <p class="bold">Interest Rate</p>
                             <p>...</p>
                         </div>
 
                         <div>
-                            <p class="bold">Lender</p>
+                            <p class="bold">Principal</p>
                             <p>...</p>
                         </div>
+
+                        <div>
+                            <p class="bold">Next Payment Due</p>
+                            <p>Date: mm/dd/yy</p>
+                            <p>Amount: $</p>
+                        </div>
                     </div>
-                    <p><a id="viewLoan" href="activeloans.html">View more details > ></a></p>
-                    <form action="makepayment.html">
-                        <button id="makePaymentButton" type="submit">Make a payment</button>
-                    </form>
+
+                    <div class="loanActions">
+                        <p><a id="viewLoan" href="activeloans.html">View more details > </a></p>
+                        <form action="makepayment.html">
+                            <button id="makePaymentButton" type="submit">Make a payment</button>
+                        </form>
+                    </div>
                 </div>
             `;
             break;

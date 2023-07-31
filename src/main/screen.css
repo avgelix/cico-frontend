@@ -219,7 +219,7 @@ button#bannerSignOut {
 
 .headerContent h2 {
   font-size: 30px;
-  margin-top: 19.1px;
+  margin-top: 19px;
   margin-right: 10px; /* Add horizontal space between the h2 and p */
 }
 
@@ -280,6 +280,13 @@ button#bannerSignOut {
   }
   
   .loanInfo {
+    display: flex;
+    place-content: space-between;
+    margin-bottom: 20px;
+    margin-top: 0;
+  }
+
+  .loanActions {
     display: flex;
     place-content: space-between;
     margin-bottom: 20px;
