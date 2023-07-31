@@ -112,5 +112,6 @@ function showContent(option) {
             break;
         }
       }
-// Initially show Option 1 content on page load
+
+// Initially show Lender content on page load
 showContent('lender');

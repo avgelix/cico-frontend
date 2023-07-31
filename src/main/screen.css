@@ -286,6 +286,12 @@ button#bannerSignOut {
     margin-top: 0;
   }
 
+  .newPayment {
+    display: flex;
+    place-content: space-between;
+    margin-bottom: 100px;
+  }
+
   .loanInfo > * {
     margin-top: 0;
   }
@@ -294,3 +300,15 @@ button#bannerSignOut {
     font-weight: 600;
   }
   
+  .noshow {
+    display: none;
+  }
+
+  .paymentLoan {
+    width: 30%;
+    /*background-color: lightgoldenrodyellow;*/
+  }
+
+  .paymentLoan > .loanInfo {
+    margin-bottom: 0;
+  }
