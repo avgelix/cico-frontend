@@ -10,13 +10,14 @@ function authenticated() {
     document.getElementById('not-authenticated').style.display = 'none';
     document.getElementById('authenticated').style.display = 'block';
     document.getElementById('message').innerHTML = 'User: ' + keycloak.tokenParsed['preferred_username'];
+    postrequest('public');
 }
 
 function logoutAndRedirect() {
     keycloak.logout({ redirectUri: 'http://localhost:8080/dummy-frontend' });
   }
 
-function request(endpoint) {
+function getrequest(endpoint) {
     var req = function() {
         var req = new XMLHttpRequest();
         var output = document.getElementById('message');
@@ -59,11 +60,37 @@ function request(endpoint) {
     } else {
         req();
     }
-}
+};
+
+function postrequest(endpoint) {
+    var req = function() {
+        var req = new XMLHttpRequest();
+        req.open('POST', serviceUrl + '/' + endpoint, true);
+
+        if (keycloak.authenticated) {
+            //req.withCredentials = true; // to include credentials (cookies) in the request
+            req.setRequestHeader('Authorization', 'Bearer ' + keycloak.token);
+            console.log(keycloak.tokenParsed);
+        
+            req.onreadystatechange = function () {
+                console.log(req.readyState);
+                console.log(req.status);
+            }
+
+        req.send();
+        };
+    }
+    if (keycloak.authenticated) {
+        keycloak.updateToken(30).then(req);
+    } else {
+        req();
+    }
+};
 
 window.onload = function () { 
     const init = keycloak.init({ onLoad: 'check-sso', promiseType: 'native', checkLoginIframeInterval: 1 })
-    console.log(init);
+    console.log(init); 
+    
     init.then(function () {
         if (keycloak.authenticated) {
             authenticated();
@@ -76,6 +103,8 @@ window.onload = function () {
 
         document.body.style.display = 'block';
     });
+
 }
+
 
 keycloak.onAuthLogout = notAuthenticated;

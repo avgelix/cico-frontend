@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             //responseContainer.textContent = JSON.stringify(data);
             responseContainer.innerHTML = 
             `Loan Amount: $${data.response.balance}<br>` +
-            `Periodic Interest: ${data.response.periodicInterest.toFixed(3)}%<br>` +
+            `Periodic Interest: ${data.response.periodicInterest.toFixed(5)}%<br>` +
             `Lender: ` + lender + `<br>` +
             `Lendee: ` + lendee + `<br>` +
             `Repayment Start Date: ` + formattedStartDate + `<br>` +
