@@ -19,8 +19,27 @@
 
             <div class="newPayment">
                 <form id="paymentDetails">
-                    <label for="payment">Payment Amount:</label>
-                    <input type="number" id="payment" oninput="displayDetails()" name="payment" placeholder="$" required>
+                    <div>
+                        <label for="payment">Payment Amount:</label>
+                        <input type="number" id="payment" oninput="displayDetails()" name="payment" placeholder="$" required>
+                    </div>
+                    <div>
+                    <label for="mySelection">Payment Method:</label>
+                        <select id="mySelection" name="selection">
+                            <option value="zelle">Zelle</option>
+                            <option value="paypal" selected>Paypal</option>
+                            <option value="venmo" selected>Venmo</option>
+                            <option value="check">Check</option>
+                            <option value="bankTransfer">Bank Transfer</option>
+                            <option value="ACHTransfer">ACH Transfer</option>
+                            <option value="cash">Cash</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="myTextField">Notes:</label>
+                        <input type="text" id="myTextField" name="text_field_name" size="30">
+                    </div>
                 </form>
 
                 <div class="loan paymentLoan">
