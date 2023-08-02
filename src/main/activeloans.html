@@ -5,6 +5,7 @@
     <title>Create Loan</title>
     <script src="keycloak.js"></script>
     <script src="app.js"></script>
+    <script src="activeloans.js"></script>
 </head>
 
 <body>
@@ -15,8 +16,8 @@
 
     <div class="sidebar">
         <ul>
-            <li><a href="#" class="sidebarClick" onclick="showContent('lender')" autofocus>Lender View</a></li>
-            <li><a href="#" class="sidebarClick" onclick="showContent('lendee')">Lendee View</a></li>
+            <li><a href="#" class="sidebarClick" data-action="lenderLoans" autofocus>Lender View</a></li>
+            <li><a href="#" class="sidebarClick" data-action="lendeeLoans">Lendee View</a></li>
         </ul>
     </div>
   
@@ -30,8 +31,6 @@
     <footer>
       <p>&copy; 2023 TOCA. All rights reserved.</p>
     </footer>
-  
-    <script src="activeloans.js"></script>
 
   </body>
 
