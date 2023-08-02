@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html id="activeLoans">
-  <head>
-    <link rel="stylesheet" type="text/css" href="screen.css">
-    <title>Create Loan</title>
-    <script src="keycloak.js"></script>
-    <script src="app.js"></script>
-    <script src="activeloans.js"></script>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="screen.css">
+  <title>Create Loan</title>
+  <script src="keycloak.js"></script>
+  <script src="app.js"></script>
+  <script src="activeloans.js"></script>
 </head>
 
 <body>
-    <div class="banner">
-        <p><a id="bannerTextLogo" href=".">CICO</a></p>
-        <button name="bannerSignOut" id="bannerSignOut" onclick="logoutAndRedirect()">Logout</button>
+  <div class="banner">
+    <p><a id="bannerTextLogo" href=".">CICO</a></p>
+    <button name="bannerSignOut" id="bannerSignOut" onclick="logoutAndRedirect()">Logout</button>
+  </div>
+
+  <div class="sidebar">
+    <ul>
+      <li><a href="#" class="sidebarClick" data-action="lenderLoans" autofocus>Lender View</a></li>
+      <li><a href="#" class="sidebarClick" data-action="lendeeLoans">Lendee View</a></li>
+    </ul>
+  </div>
+
+  <main>
+    <div id="activeLoansContent">
+
     </div>
 
-    <div class="sidebar">
-        <ul>
-            <li><a href="#" class="sidebarClick" data-action="lenderLoans" autofocus>Lender View</a></li>
-            <li><a href="#" class="sidebarClick" data-action="lendeeLoans">Lendee View</a></li>
-        </ul>
-    </div>
-  
-    <main>
-        <div id="activeLoansContent">
+  </main>
 
-        </div>
-       
-    </main>
+  <footer>
+    <p>&copy; 2023 TOCA. All rights reserved.</p>
+  </footer>
 
-    <footer>
-      <p>&copy; 2023 TOCA. All rights reserved.</p>
-    </footer>
-
-  </body>
+</body>
 
 </html>

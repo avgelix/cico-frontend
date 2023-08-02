@@ -1,44 +1,45 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="screen.css">
-        <title>Home</title>
 
-        <script src="keycloak.js"></script>
-        <script src="app.js"></script>
-    </head>
+<head>
+    <link rel="stylesheet" type="text/css" href="screen.css">
+    <title>Home</title>
 
-    <body>
-        <div class="banner">
-            <p><a id="bannerTextLogo" href=".">CICO</a></p>
-            <button name="bannerSignOut" id="bannerSignOut" onclick="logoutAndRedirect()">Logout</button>
+    <script src="keycloak.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<body>
+    <div class="banner">
+        <p><a id="bannerTextLogo" href=".">CICO</a></p>
+        <button name="bannerSignOut" id="bannerSignOut" onclick="logoutAndRedirect()">Logout</button>
+    </div>
+
+    <main id="homeFlex">
+        <div id="leftDiv">
+            <form action="createloan.html">
+                <button id="createLoanButton" type="submit">Create a new loan</button>
+            </form>
+            <form action="activeloans.html">
+                <button id="makePaymentButton" type="submit">Make a payment</button>
+            </form>
+
+            <p><a id="viewLoansButton" href="activeloans.html">View all active loans ></a></p>
         </div>
-
-        <main id="homeFlex">  
-            <div id="leftDiv">
-                <form action="createloan.html">
-                    <button id="createLoanButton" type="submit">Create a new loan</button>
-                </form>
-                <form action="activeloans.html">
-                    <button id="makePaymentButton" type="submit">Make a payment</button>
-                </form>
-                
-                <p><a id="viewLoansButton" href="activeloans.html">View all active loans ></a></p>
+        <div id="rightDiv">
+            <div class="content" id="roles">
+                <button name="publicBtn" onclick="getrequest('public')">Invoke Public</button>
+                <button name="securedBtn" onclick="getrequest('secured')">Invoke Secured</button>
+                <button name="adminBtn" onclick="getrequest('admin')">Invoke Admin</button>
             </div>
-            <div id="rightDiv">
-                <div class="content" id="roles">    
-                    <button name="publicBtn" onclick="getrequest('public')">Invoke Public</button>
-                    <button name="securedBtn" onclick="getrequest('secured')">Invoke Secured</button>
-                    <button name="adminBtn" onclick="getrequest('admin')">Invoke Admin</button>
-                </div>
-            
-                <div class="message" id="message"></div>
-            </div>
-        </main>
 
-        <footer>
-            <p>&copy; 2023 TOCA. All rights reserved.</p>
-        </footer>
-    </body>
-    
+            <div class="message" id="message"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 TOCA. All rights reserved.</p>
+    </footer>
+</body>
+
 </html>

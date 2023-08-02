@@ -1,331 +1,341 @@
  /* some basic CSS styles for the table */
 
  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
+   border-collapse: collapse;
+   width: 100%;
+ }
 
-  thead {
-    font-size: 18px;
-  }
+ thead {
+   font-size: 18px;
+ }
 
-  main {
-    margin: 40px;
-  }
+ main {
+   margin: 40px;
+ }
 
-  th, td {
-    border: 1.5px solid black;
-    text-align: left;
-    padding: 8px;
-    font-size: 16px;
-  }
+ th,
+ td {
+   border: 1.5px solid black;
+   text-align: left;
+   padding: 8px;
+   font-size: 16px;
+ }
 
-  th {
-    background-color: lightgrey;
-  }
+ th {
+   background-color: lightgrey;
+ }
 
-  .hidden {
-    display: none;
-  }
+ .hidden {
+   display: none;
+ }
 
-  table {
-    margin-bottom: 50px;
-  }
+ table {
+   margin-bottom: 50px;
+ }
 
-  div {
-    margin-top: 50px;
-  }
+ div {
+   margin-top: 50px;
+ }
 
-  #loanTerms * {
-    display: block;
-    margin-bottom: 10px;
-  }
+ #loanTerms * {
+   display: block;
+   margin-bottom: 10px;
+ }
 
-  #paymentDetails * {
-    display: block;
-    margin-bottom: 10px;
-  }
+ #paymentDetails * {
+   display: block;
+   margin-bottom: 10px;
+ }
 
-  #paymentDetails {
-    margin-top: 60px;
-  }
+ #paymentDetails {
+   margin-top: 60px;
+ }
 
-  button {
-    margin-top: 50px;
-    background-color: greenyellow;
-    padding: 10px;
-    border-width: 1px;
-    border-radius: 10px;
-    letter-spacing: 1px;
-    font-weight: 550;
-    cursor: pointer;
-  }
+ button {
+   margin-top: 50px;
+   background-color: greenyellow;
+   padding: 10px;
+   border-width: 1px;
+   border-radius: 10px;
+   letter-spacing: 1px;
+   font-weight: 550;
+   cursor: pointer;
+ }
 
-  footer {
-    margin: 0px;
-    margin-top: 100px;
-    padding: 5px;
-    background-color: white;
-    text-align: center;
-    font-size: 14px;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-  }
+ footer {
+   margin: 0px;
+   margin-top: 100px;
+   padding: 5px;
+   background-color: white;
+   text-align: center;
+   font-size: 14px;
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+ }
 
-  .banner {
-    background-color: green;
-    color: #fff;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    margin-top: 0px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-  }
+ .banner {
+   background-color: green;
+   color: #fff;
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   margin-top: 0px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 10px;
+ }
 
-  #bannerTextLogo {
-    font-size: 18px;
-    font-weight: 600;
-    padding-left: 50px;
-    text-decoration: none;
-    color:#fff;
-    flex: 1;
-  }
+ #bannerTextLogo {
+   font-size: 18px;
+   font-weight: 600;
+   padding-left: 50px;
+   text-decoration: none;
+   color: #fff;
+   flex: 1;
+ }
 
 
-  main {
-    padding-top: 80px; /* Add spacing to prevent content from being hidden behind the banner */ 
-    padding-bottom: 80px; /* Add spacing to prevent content from being hidden behind the footer */ 
-  }
+ main {
+   padding-top: 80px;
+   /* Add spacing to prevent content from being hidden behind the banner */
+   padding-bottom: 80px;
+   /* Add spacing to prevent content from being hidden behind the footer */
+ }
 
-  #viewLoansButton {
-    background-color: #fff;
-    border: none;
-    text-decoration: underline;
-    color: black;
-  }
+ #viewLoansButton {
+   background-color: #fff;
+   border: none;
+   text-decoration: underline;
+   color: black;
+ }
 
-  .sidebar {
-    width: 200px;
-    background-color: #f0f0f0;
-    margin-top: 0px;
-    padding-left: 0px;
-    margin-left:0px;
-  }
+ .sidebar {
+   width: 200px;
+   background-color: #f0f0f0;
+   margin-top: 0px;
+   padding-left: 0px;
+   margin-left: 0px;
+ }
 
-  .sidebar ul {
-    padding-left: 0px;
-  }
-  .sidebar ul > li {
-    list-style: none;
-    padding-top: 20px;
-  }
+ .sidebar ul {
+   padding-left: 0px;
+ }
 
-  .sidebar ul > li > a {
-    padding-left: 40px;
-  }
+ .sidebar ul>li {
+   list-style: none;
+   padding-top: 20px;
+ }
 
-  .sidebar a {
-    display: block;
-    margin-bottom: 10px;
-    padding:20px;
-    color: #333;
-    text-decoration: none;
-  }
-  
-  .sidebar a:hover {
-    background-color: lightgreen;
-  }
+ .sidebar ul>li>a {
+   padding-left: 40px;
+ }
 
-  .sidebarClick:focus {
-    background-color: lightgray;
-    text-decoration: underline;
-    outline: none;
-  }
+ .sidebar a {
+   display: block;
+   margin-bottom: 10px;
+   padding: 20px;
+   color: #333;
+   text-decoration: none;
+ }
 
-  #activeLoansContent {
-    margin-left: 30px; /* Make sure content doesn't overlap with the sidebar */
-    padding: 20px;
-    margin-top: 0px;
-    display: grid;
-    margin-right: 11%;
-    padding: 20px;
-    padding-top: 0px;
-}
+ .sidebar a:hover {
+   background-color: lightgreen;
+ }
 
-button#bannerSignOut {
-  /* Remove default button styles */
-  border: none;
-  background-color: transparent;
-  padding: 0;
-  padding-right: 50px;
-  margin: 0;
-  cursor: pointer;
+ .sidebarClick:focus {
+   background-color: lightgray;
+   text-decoration: underline;
+   outline: none;
+ }
 
-  /* Make it look like a "p" element */
-  font-size: 16px;
-  font-weight: 600;
-  text-decoration: none;
-  color:#fff;
-  letter-spacing: 0.5px;
-  font-family: inherit;
-}
-#loginBtn {
-  /*position: fixed;
+ #activeLoansContent {
+   margin-left: 30px;
+   /* Make sure content doesn't overlap with the sidebar */
+   padding: 20px;
+   margin-top: 0px;
+   display: grid;
+   margin-right: 11%;
+   padding: 20px;
+   padding-top: 0px;
+ }
+
+ button#bannerSignOut {
+   /* Remove default button styles */
+   border: none;
+   background-color: transparent;
+   padding: 0;
+   padding-right: 50px;
+   margin: 0;
+   cursor: pointer;
+
+   /* Make it look like a "p" element */
+   font-size: 16px;
+   font-weight: 600;
+   text-decoration: none;
+   color: #fff;
+   letter-spacing: 0.5px;
+   font-family: inherit;
+ }
+
+ #loginBtn {
+   /*position: fixed;
   left: 0;
   right: 0;
   margin: auto;
   width: fit-content;*/
- 
-  display: block;
-  margin: auto;
-  width: fit-content;
-  padding: 10px;
-}
 
-#roles {
-  margin-top: 100px;
-}
+   display: block;
+   margin: auto;
+   width: fit-content;
+   padding: 10px;
+ }
 
-.loan {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px;
-    padding-bottom:10px;
-    margin-top: 0px;
-    border-bottom: #333;
-    border-bottom-width: 0.5px;
-    border-bottom-style: solid;
-}
+ #roles {
+   margin-top: 100px;
+ }
 
-.activeLoansHeader {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    margin-top: -15px;
-}
+ .loan {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   padding: 20px;
+   padding-bottom: 10px;
+   margin-top: 0px;
+   border-bottom: #333;
+   border-bottom-width: 0.5px;
+   border-bottom-style: solid;
+ }
 
-.headerContent {
-  display: flex; /* Display the h2 and p on the same line */
-  align-items: center; /* Align h2 and p vertically within the headerContent div */
-}
+ .activeLoansHeader {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   margin-bottom: 20px;
+   margin-top: -15px;
+ }
 
-.headerContent h2 {
-  font-size: 30px;
-  margin-top: 19px;
-  margin-right: 10px; /* Add horizontal space between the h2 and p */
-}
+ .headerContent {
+   display: flex;
+   /* Display the h2 and p on the same line */
+   align-items: center;
+   /* Align h2 and p vertically within the headerContent div */
+ }
 
-.loan h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
+ .headerContent h2 {
+   font-size: 30px;
+   margin-top: 19px;
+   margin-right: 10px;
+   /* Add horizontal space between the h2 and p */
+ }
 
-.loan p {
-    font-size: 16px;
-  }
+ .loan h2 {
+   font-size: 24px;
+   margin-bottom: 10px;
+ }
 
-  #activeLoans > body {
-    margin-top: 80px;
-    margin-left: 0;
-    display: flex;
-    min-height: 100vh; /* Minimum full viewport height */
-  }
+ .loan p {
+   font-size: 16px;
+ }
 
-  #activeLoans > body > main {
-    margin: 0px;
-    padding-top: 0px;
-    flex: 1;
-  }
+ #activeLoans>body {
+   margin-top: 80px;
+   margin-left: 0;
+   display: flex;
+   min-height: 100vh;
+   /* Minimum full viewport height */
+ }
 
-  #successLoan {
-    display: block;
-    margin: auto;
-    margin-top: 150px;
-    width: fit-content;
-    text-align: center;
-  }
+ #activeLoans>body>main {
+   margin: 0px;
+   padding-top: 0px;
+   flex: 1;
+ }
 
-  #makePaymentButton {
-    background-color: blue;
-    color: white;
-    margin-top: 10px;
-  }
+ #successLoan {
+   display: block;
+   margin: auto;
+   margin-top: 150px;
+   width: fit-content;
+   text-align: center;
+ }
+
+ #makePaymentButton {
+   background-color: blue;
+   color: white;
+   margin-top: 10px;
+ }
 
  #homeFlex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  #rightDiv {
-    display: flex;
-    display: block;
-    margin-top: 0;
-  }
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+ }
 
-  #roles {
-    margin-top: 0;
-  }
+ #rightDiv {
+   display: flex;
+   display: block;
+   margin-top: 0;
+ }
 
-  .hidden {
-    display: none;
-  }
-  
-  .loanInfo {
-    display: flex;
-    place-content: space-between;
-    margin-bottom: 20px;
-    margin-top: 0;
-  }
+ #roles {
+   margin-top: 0;
+ }
 
-  .loanActions {
-    display: flex;
-    place-content: space-between;
-    margin-bottom: 20px;
-    margin-top: 0;
-  }
+ .hidden {
+   display: none;
+ }
 
-  .newPayment {
-    display: flex;
-    place-content: space-between;
-    margin-bottom: 100px;
-  }
+ .loanInfo {
+   display: flex;
+   place-content: space-between;
+   margin-bottom: 20px;
+   margin-top: 0;
+ }
 
-  #paymentDetails {
-    display: grid;
-    grid-template-columns: 0.1fr 0.6fr 1fr;
-    gap: 41px;
-  }
+ .loanActions {
+   display: flex;
+   place-content: space-between;
+   margin-bottom: 20px;
+   margin-top: 0;
+ }
 
-  #paymentDetails > * {
-    margin-top: 0;
-  }
+ .newPayment {
+   display: flex;
+   place-content: space-between;
+   margin-bottom: 100px;
+ }
 
-  .loanInfo > * {
-    margin-top: 0;
-  }
+ #paymentDetails {
+   display: grid;
+   grid-template-columns: 0.1fr 0.6fr 1fr;
+   gap: 41px;
+ }
 
-  .bold {
-    font-weight: 600;
-  }
-  
-  .noshow {
-    display: none;
-  }
+ #paymentDetails>* {
+   margin-top: 0;
+ }
 
-  .paymentLoan {
-    width: 30%;
-    /*background-color: lightgoldenrodyellow;*/
-  }
+ .loanInfo>* {
+   margin-top: 0;
+ }
 
-  .paymentLoan > .loanInfo {
-    margin-bottom: 0;
-  }
+ .bold {
+   font-weight: 600;
+ }
+
+ .noshow {
+   display: none;
+ }
+
+ .paymentLoan {
+   width: 30%;
+   /*background-color: lightgoldenrodyellow;*/
+ }
+
+ .paymentLoan>.loanInfo {
+   margin-bottom: 0;
+ }

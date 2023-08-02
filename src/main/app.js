@@ -15,10 +15,10 @@ function authenticated() {
 
 function logoutAndRedirect() {
     keycloak.logout({ redirectUri: 'http://localhost:8080/dummy-frontend' });
-  }
+}
 
 function getrequest(endpoint) {
-    var req = function() {
+    var req = function () {
         var req = new XMLHttpRequest();
         var output = document.getElementById('message');
         req.open('GET', serviceUrl + '/' + endpoint, true);
@@ -37,16 +37,16 @@ function getrequest(endpoint) {
                         console.log(req);
                         output.innerHTML = 'Success: ' + JSON.parse(req.responseText).message;
                         // Process responseData
-                      } catch (error) {
+                    } catch (error) {
                         // Handle the parsing error (e.g., show an error message, fallback to default value, etc.)
                         console.error("There is an error parsing JSON response:", error);
-                      }
+                    }
                 } else if (req.status == 0) {
                     output.innerHTML = '<span class="error">Request failed</span>';
                 } else {
                     console.log(req);
                     console.log(req.status + ' ' + req.statusText);
-                    
+
                     output.innerHTML = '<span class="error">You do not have the necessary permissions to access Cico this way. Sorry :( </span>';
                 }
             }
@@ -63,7 +63,7 @@ function getrequest(endpoint) {
 };
 
 function postrequest(endpoint) {
-    var req = function() {
+    var req = function () {
         var req = new XMLHttpRequest();
         req.open('POST', serviceUrl + '/' + endpoint, true);
 
@@ -71,13 +71,13 @@ function postrequest(endpoint) {
             //req.withCredentials = true; // to include credentials (cookies) in the request
             req.setRequestHeader('Authorization', 'Bearer ' + keycloak.token);
             console.log(keycloak.tokenParsed);
-        
+
             req.onreadystatechange = function () {
                 console.log(req.readyState);
                 console.log(req.status);
             }
 
-        req.send();
+            req.send();
         };
     }
     if (keycloak.authenticated) {
@@ -87,10 +87,10 @@ function postrequest(endpoint) {
     }
 };
 
-window.onload = function () { 
+window.onload = function () {
     const init = keycloak.init({ onLoad: 'check-sso', promiseType: 'native', checkLoginIframeInterval: 1 })
-    console.log(init); 
-    
+    console.log(init);
+
     init.then(function () {
         if (keycloak.authenticated) {
             authenticated();

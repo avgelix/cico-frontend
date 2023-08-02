@@ -1,95 +1,99 @@
 document.addEventListener('DOMContentLoaded', () => {
     const activeLoans = document.getElementById('activeLoansContent');
-  
+    var loanBalance = '';
+    var loanInterest = '';
+    var loanLender = '';
+    var loanIndex ='';
+
     keycloak.init({ onLoad: 'login-required' }).then((auth) => {
-      if (!auth) {
-        console.error('Keycloak authentication failed.');
-        return;
-      }
-      // Keycloak authentication succeeded, now fetch the token
-      console.log(keycloak.token);
-      fetchLenderLoans(); // Changed the function name to follow camelCase convention
-    }).catch((error) => {
-      console.error('Error initializing Keycloak:', error);
-    });
-  
-    async function fetchLenderLoans() { // Changed the function name to follow camelCase convention
-      try {
-        console.log('starting....');
-        const response = await fetch('http://localhost:3000/service/lenderLoans', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${keycloak.token}`, // Fix the token format
-          }
-        });
-        console.log('so...');
-  
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Fetch error: ${response.status} - ${errorText}`);
+        if (!auth) {
+            console.error('Keycloak authentication failed.');
+            return;
         }
-  
-        const data = await response.json();
-        console.log("let's go");
-        data.loans.forEach((loan, index) => {
-          console.log(`Loan #${index + 1}:`, loan);
-        });
-        displayLenderLoans(data.loans);
-        console.log('almost');
-        return data.loans; // Assuming the "loans" property contains the loan data in the response
-      } catch (error) {
-        console.error('Error fetching lender loans:', error);
-        return []; // Return an empty array to handle the case when there are no loans found.
-      }
+        // Keycloak authentication succeeded, now fetch the token
+        console.log(keycloak.token);
+        fetchLenderLoans(); // Changed the function name to follow camelCase convention
+    }).catch((error) => {
+        console.error('Error initializing Keycloak:', error);
+    });
+
+    async function fetchLenderLoans() { // Changed the function name to follow camelCase convention
+        try {
+            console.log('starting....');
+            const response = await fetch('http://localhost:3000/service/lenderLoans', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${keycloak.token}`, // Fix the token format
+                }
+            });
+            console.log('so...');
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Fetch error: ${response.status} - ${errorText}`);
+            }
+
+            const data = await response.json();
+            console.log("let's go");
+            data.loans.forEach((loan, index) => {
+                console.log(`Loan #${index + 1}:`, loan);
+            });
+            displayLenderLoans(data.loans);
+            console.log('almost');
+            return data.loans; // Assuming the "loans" property contains the loan data in the response
+        } catch (error) {
+            console.error('Error fetching lender loans:', error);
+            return []; // Return an empty array to handle the case when there are no loans found.
+        }
     }
 
     async function fetchLendeeLoans() { // Changed the function name to follow camelCase convention
         try {
-          console.log('starting....');
-          const response = await fetch('http://localhost:3000/service/lendeeLoans', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${keycloak.token}`, // Fix the token format
+            console.log('starting....');
+            const response = await fetch('http://localhost:3000/service/lendeeLoans', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${keycloak.token}`, // Fix the token format
+                }
+            });
+            console.log('so...');
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Fetch error: ${response.status} - ${errorText}`);
             }
-          });
-          console.log('so...');
-    
-          if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Fetch error: ${response.status} - ${errorText}`);
-          }
-    
-          const data = await response.json();
-          console.log("let's go");
-          data.loans.forEach((loan, index) => {
-            console.log(`Loan #${index + 1}:`, loan);
-          });
-          displayLendeeLoans(data.loans);
-          console.log('almost');
-          return data.loans; // Assuming the "loans" property contains the loan data in the response
+
+            const data = await response.json();
+            console.log("let's go");
+            data.loans.forEach((loan, index) => {
+                console.log(`Loan #${index + 1}:`, loan);
+            });
+            displayLendeeLoans(data.loans);
+            console.log('almost');
+            return data.loans; // Assuming the "loans" property contains the loan data in the response
         } catch (error) {
-          console.error('Error fetching lender loans:', error);
-          return []; // Return an empty array to handle the case when there are no loans found.
+            console.error('Error fetching lender loans:', error);
+            return []; // Return an empty array to handle the case when there are no loans found.
         }
-      }
-  
+    }
+
     function displayLenderLoans(loans) {
-      let html = '';
-      if (loans.length === 0) {
-        html = '<div><p>No lender loans found.</p></div>';
-      } else {
-        html += `
+        let html = '';
+        if (loans.length === 0) {
+            html = '<div><p>No lender loans found.</p></div>';
+        } else {
+            html += `
             <div class="activeLoansHeader">
                     <div class="headerContent"><h2>Total Loaned:</h2> <p> $4000</p></div>
                     <div class="headerContent"><h2>Interest Gained to Date:</h2> <p> $200</p></div>
                 </div>
                 `;
-        loans.forEach((loan, index) => {
-          // Assuming you have a function to format the start date
-          const formattedStartDate = '...';
-          html += `
+            loans.forEach((loan, index) => {
+                // Assuming you have a function to format the start date
+                const formattedStartDate = '...';
+                html += `
             <div class="loan">
               <h2>Loan #${index + 1}</h2>
               <div class="loanInfo">
@@ -108,27 +112,31 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
               <p><a id="viewLoan" href="activeloans.html">View more details</a></p>
             </div> `
-          ;
-        });
-      }
-      console.log(html);
-      activeLoans.innerHTML = html;
+                    ;
+            });
+        }
+        console.log(html);
+        activeLoans.innerHTML = html;
     }
 
     function displayLendeeLoans(loans) {
-      let lendeehtml = '';
-      if (loans.length === 0) {
-        lendeehtml = ' <div> <p>No lendee loans found.</p></div>';
-      } else {
-        lendeehtml += `
+        let lendeehtml = '';
+        if (loans.length === 0) {
+            lendeehtml = ' <div> <p>No lendee loans found.</p></div>';
+        } else {
+            lendeehtml += `
         <div class="activeLoansHeader">
             <div class="headerContent"> <h2>Total To Pay:</h2> <p> $6000</p></div>
             <div class="headerContent"> <h2>Interest Saved to Date:</h2> <p> $1000</p></div>
         </div>`;
-        loans.forEach((loan, index) => {
-          // Assuming you have a function to format the next payment due date
-          const formattedNextPaymentDue = '...';
-          lendeehtml += `
+            loans.forEach((loan, index) => {
+                // Assuming you have a function to format the next payment due date
+                const formattedNextPaymentDue = '...';
+                loanIndex = `${index + 1}`;
+                loanBalance = `${loan.loan_amount}`;
+                loanInterest = `${loan.annual_interest}`;
+                loanLender = `${loan.lender_full_name}`;
+                lendeehtml += `
             <div class="loan">
               <h2>Loan #${index + 1}</h2>
               <div class="loanInfo">
@@ -153,32 +161,39 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             </div>
           `;
-        });
-      }
-      console.log(lendeehtml);
-      activeLoans.innerHTML = lendeehtml;
-    }
+            });
+        }
 
+        console.log(lendeehtml);
+        activeLoans.innerHTML = lendeehtml;
+
+        // Store the request data in session storage
+    sessionStorage.setItem('index', loanIndex);
+    sessionStorage.setItem('balance', loanBalance);
+    sessionStorage.setItem('interest', loanInterest);
+    sessionStorage.setItem('lender', loanLender);
+
+    }
     // Add a separate function to handle sidebar click
-  function handleSidebarClick(event) {
-    const action = event.target.dataset.action;
-    if (action === 'lenderLoans') {
-      fetchLenderLoans();
-    } else if (action === 'lendeeLoans') {
-      fetchLendeeLoans();
+    function handleSidebarClick(event) {
+        const action = event.target.dataset.action;
+        if (action === 'lenderLoans') {
+            fetchLenderLoans();
+        } else if (action === 'lendeeLoans') {
+            fetchLendeeLoans();
+        }
     }
-  }
 
-  // Add event listeners to sidebar links
-  const sidebarLinks = document.querySelectorAll('.sidebarClick');
-  sidebarLinks.forEach(link => {
-    link.addEventListener('click', handleSidebarClick);
-  });
-  
+    // Add event listeners to sidebar links
+    const sidebarLinks = document.querySelectorAll('.sidebarClick');
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', handleSidebarClick);
+    });
+
     // Initially show Lender loans on page load
     fetchLenderLoans();
-  });
-  
+});
+
 
 
 

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Keycloak Example App</title>
 
-    <link rel="stylesheet" type="text/css" href="screen.css"/>
+    <link rel="stylesheet" type="text/css" href="screen.css" />
 
     <script src="keycloak.js"></script>
     <script src="app.js"></script>
@@ -26,12 +27,12 @@
                 <button name="accountBtn" onclick="keycloak.accountManagement()">Account</button>
             </div>
 
-            <div class="content noshow">    
+            <div class="content noshow">
                 <button name="publicBtn" onclick="request('public')">Invoke Public</button>
                 <button name="securedBtn" onclick="request('secured')">Invoke Secured</button>
                 <button name="adminBtn" onclick="request('admin')">Invoke Admin</button>
             </div>
-        
+
             <div class="message" id="message"></div>
 
         </div>

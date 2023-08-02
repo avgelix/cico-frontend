@@ -1,50 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="screen.css">
-        <title>Confirm Loan Details</title>
-        <script src="keycloak.js"></script>
-        <script src="app.js"></script>
-    </head>
 
-    <body>
-        <div class="banner">
-            <p><a id="bannerTextLogo" href=".">CICO</a></p>
-            <button name="bannerSignOut" id="bannerSignOut" onclick="logoutAndRedirect()">Logout</button>
+<head>
+    <link rel="stylesheet" type="text/css" href="screen.css">
+    <title>Confirm Loan Details</title>
+    <script src="keycloak.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<body>
+    <div class="banner">
+        <p><a id="bannerTextLogo" href=".">CICO</a></p>
+        <button name="bannerSignOut" id="bannerSignOut" onclick="logoutAndRedirect()">Logout</button>
+    </div>
+
+    <main>
+        <h1>Confirm Loan Details</h1>
+        <div id="responseContainer"></div>
+
+        <div>
+            <h2>Amortization Table</h2>
+            <table id="amorTable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Total payment amount</th>
+                        <th>Amount to interest</th>
+                        <th>Amount to principal</th>
+                        <th>Remaining loan balance</th>
+                        <th>Payment Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
 
-        <main>
-            <h1>Confirm Loan Details</h1>
-            <div id="responseContainer"></div>
+        <form action="loansuccess.html">
+            <button type="submit">Create Loan ></button>
+        </form>
+    </main>
 
-            <div>  
-                <h2>Amortization Table</h2>
-                <table id="amorTable">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Total payment amount</th>
-                            <th>Amount to interest</th>
-                            <th>Amount to principal</th>
-                            <th>Remaining loan balance</th>
-                            <th>Payment Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>  
+    <footer>
+        <p>&copy; 2023 TOCA. All rights reserved.</p>
+    </footer>
 
-            <form action="loansuccess.html">
-                <button type="submit">Create Loan ></button>
-            </form>
-        </main>
-        
-        <footer>
-            <p>&copy; 2023 TOCA. All rights reserved.</p>
-        </footer>
+    <script src="loandetails.js"></script>
+</body>
 
-        <script src="loandetails.js"></script>
-    </body>
-    
 </html>
