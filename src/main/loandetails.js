@@ -8,6 +8,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const lender = sessionStorage.getItem('lenderInput');
     const lendee = sessionStorage.getItem('lendeeInput');
 
+    console.log(lender);
+    console.log(requestData);
+
+    function newLoan(data) {
+        // Get the loan details and lender/lendee names from the user input in the UI
+        const loan_amount = `${data.response.balance}`;
+        const annual_interest = `${requestData.apr}`;
+        const lender_name = lender;
+        const lendee_name = lendee;
+        const amortization_data = 
+        {
+            "response_Data": data,
+        };
+    
+        // Create the request body with the loan details
+        const requestBody = {
+          loan_amount,
+          annual_interest,
+          lender_name,
+          lendee_name,
+          amortization_data,
+        };
+        console.log(typeof(amortization_data));
+    
+        // Make the POST request to create the loan
+        fetch('http://localhost:3000/service/newLoan', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + keycloak.token,
+          },
+          body: JSON.stringify(requestBody),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Handle the response from the backend
+            console.log(data); // You can use this data in your UI to display a success message or perform other actions.
+          })
+          .catch((error) => {
+            console.error('Error creating loan:', error);
+            // Handle errors and display an error message to the user if needed.
+          });
+      }
+    
+
 
     if (requestData) {
         fetch('http://localhost:3000/service/createLoan', {
@@ -81,12 +126,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             tableBody.appendChild(row);
             });
+
+            newLoan(data);
          })
         .catch((error) => {
         // Handle any errors that occur during the request
         console.error('Error:', error);
         });
     };
+
+
+    
   
   
     /* Show the hidden element
