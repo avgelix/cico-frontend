@@ -42,22 +42,41 @@ const paymentInput = document.getElementById('payment');
 paymentInput.addEventListener('input', hideAmort);
 paymentInput.addEventListener('input', displayDetails);
 
-const balance = sessionStorage.getItem('balance');
-const interest = sessionStorage.getItem('interest');
-const index = sessionStorage.getItem('index');
-const lender = sessionStorage.getItem('lender');
+
+/*const loanIndex = sessionStorage.getItem('index');
+
+// Retrieve the loan data from sessionStorage based on the loan index
+const balance = sessionStorage.getItem(`balance${loanIndex}`);
+const interest = sessionStorage.getItem(`interest${loanIndex}`);
+const lender = sessionStorage.getItem(`lender${loanIndex}`);
+
+// Use the retrieved data as needed
+console.log(loanIndex, balance, interest, lender);*/
+
+const loanIndexToRetrieve = parseInt(sessionStorage.getItem('index'), 10);
+const retrievedLoanIndex = sessionStorage.getItem(`index${loanIndexToRetrieve}`);
+const retrievedBalance = sessionStorage.getItem(`balance${loanIndexToRetrieve}`);
+const retrievedInterest = sessionStorage.getItem(`interest${loanIndexToRetrieve}`);
+const retrievedLender = sessionStorage.getItem(`lender${loanIndexToRetrieve}`);
+
+console.log("Retrieved Data for Loan Index:", loanIndexToRetrieve);
+console.log("Loan Index:", retrievedLoanIndex);
+console.log("Balance:", retrievedBalance);
+console.log("Interest:", retrievedInterest);
+console.log("Lender:", retrievedLender);
+
 
 const html = `
-    <h2>Loan #${index}</h2>
+    <h2>Loan #${retrievedLoanIndex}</h2>
     <div class="loanInfo">
         <div>
-            <p><strong>Lender:</strong> <br> ${lender}</p>
+            <p><strong>Lender:</strong> <br> ${retrievedLender}</p>
         </div>
         <div>
-            <p><strong>Interest Rate:</strong> <br> ${interest}%</p>
+            <p><strong>Interest Rate:</strong> <br> ${retrievedInterest}%</p>
         </div>
         <div>
-            <p><strong>Principal:</strong> <br> $${balance}</p>
+            <p><strong>Principal:</strong> <br> $${retrievedBalance}</p>
         </div>
     </div> `;
 

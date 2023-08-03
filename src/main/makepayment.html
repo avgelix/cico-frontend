@@ -15,8 +15,8 @@
     </div>
 
     <main>
-        <h1>Enter Payment Details</h1>
-        <p>Just a couple of questions before we make it happen</p>
+        <h1 style="margin-bottom: 0px;">Enter Payment Details</h1>
+        <p style="margin-top: 10px;">Just a couple of questions before we make it happen</p>
 
         <div class="newPayment">
             <form id="paymentDetails">
@@ -38,15 +38,17 @@
                         <option value="other">Other</option>
                     </select>
                 </div>
-                <div>
-                    <label for="myTextField">Notes:</label>
-                    <input type="text" id="myTextField" name="text_field_name" size="30">
-                </div>
             </form>
 
             <div id="thisloan" class="loan paymentLoan">
             </div>
         </div>
+        <form id="paymentNotes">
+                <label for="myTextField">Payment Notes:</label>
+                <input type="text" id="myTextField" name="text_field_name" size="60">
+        </form>
+
+        
 
 
 
