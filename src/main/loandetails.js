@@ -17,10 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const annual_interest = `${requestData.apr}`;
     const lender_name = lender;
     const lendee_name = lendee;
-    const amortization_data =
-    {
-      "response_Data": data,
-    };
+    const amortization_data = data.response;
 
     // Create the request body with the loan details
     const requestBody = {
@@ -30,7 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
       lendee_name,
       amortization_data,
     };
-    console.log(typeof (amortization_data));
+    /*console.log(typeof (amortization_data));
+    console.log(JSON.parse(amortization_data));*/
 
     // Make the POST request to create the loan
     fetch('http://localhost:3000/service/newLoan', {
