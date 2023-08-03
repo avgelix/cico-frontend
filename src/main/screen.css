@@ -263,7 +263,7 @@
    text-align: center;
  }
 
- #makePaymentButton {
+ .makePaymentButton {
    background-color: blue;
    color: white;
    margin-top: 10px;
@@ -343,4 +343,10 @@
 
  .paymentLoan>.loanInfo {
    margin-bottom: 0;
+ }
+
+ .loanDetails{
+  margin-bottom: 50px;
+  font-size: 16px;
+  padding: 20px;
  }

@@ -1,3 +1,18 @@
+// Function to retrieve the value of the 'loanIndex' parameter from the URL
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+  
+  // Get the loan index from the URL
+  var loanIndex = getParameterByName('loanIndex');
+  console.log('Loan Index:', loanIndex);
+
 let debounceTimer;
 let initialValue;
 let inputText;
@@ -35,8 +50,6 @@ function hideAmort() {
     }
 }
 
-
-
 // Assuming the 'payment' input field is triggering the displayDetails function
 const paymentInput = document.getElementById('payment');
 paymentInput.addEventListener('input', hideAmort);
@@ -53,7 +66,7 @@ const lender = sessionStorage.getItem(`lender${loanIndex}`);
 // Use the retrieved data as needed
 console.log(loanIndex, balance, interest, lender);*/
 
-const loanIndexToRetrieve = parseInt(sessionStorage.getItem('index'), 10);
+const loanIndexToRetrieve = loanIndex;
 const retrievedLoanIndex = sessionStorage.getItem(`index${loanIndexToRetrieve}`);
 const retrievedBalance = sessionStorage.getItem(`balance${loanIndexToRetrieve}`);
 const retrievedInterest = sessionStorage.getItem(`interest${loanIndexToRetrieve}`);

@@ -8,12 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Keycloak authentication succeeded, now fetch the token
     console.log(keycloak.token);
-    fetchLenderLoans(); 
+    fetchLenderLoans();
   }).catch((error) => {
     console.error('Error initializing Keycloak:', error);
   });
 
-  async function fetchLenderLoans() { 
+  async function fetchLenderLoans() {
     try {
       console.log('starting....');
       const response = await fetch('http://localhost:3000/service/lenderLoans', {
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  async function fetchLendeeLoans() { 
+  async function fetchLendeeLoans() {
     try {
       console.log('starting....');
       const response = await fetch('http://localhost:3000/service/lendeeLoans', {
@@ -62,23 +62,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const data = await response.json();
       console.log("let's go");
+
       data.loans.forEach((loan, index) => {
-          console.log(`Loan #${index + 1}:`, loan.amortization_data);
-          console.log(`Loan #${index + 1}:`, loan.amortization_data.balance);
-        
-          // Use let to declare the loanIndex, loanBalance, loanInterest, and loanLender variables
-          let loanIndex = index + 1;
-          let loanBalance = loan.loan_amount;
-          let loanInterest = loan.annual_interest;
-          let loanLender = loan.lender_full_name;
-        
-          console.log(loanIndex, loanBalance, loanInterest, loanLender);
-        
-          // Store the request data in sessionStorage
-          sessionStorage.setItem('index', Number(loanIndex));
-          sessionStorage.setItem(`balance${loanIndex}`, loanBalance);
-          sessionStorage.setItem(`interest${loanIndex}`, loanInterest);
-          sessionStorage.setItem(`lender${loanIndex}`, loanLender);
+        console.log(`Loan #${index + 1}:`, loan.amortization_data);
+        console.log(`Loan #${index + 1}:`, loan.amortization_data.balance);
+
+        //Use let to declare the loanIndex, loanBalance, loanInterest, and loanLender variables
+
+        let loanIndex = index + 1;
+        let loanBalance = loan.loan_amount;
+        let loanInterest = loan.annual_interest;
+        let loanLender = loan.lender_full_name;
+
+        console.log(loanIndex, loanBalance, loanInterest, loanLender);
+
+
+
+        // Store the request data in sessionStorage
+        sessionStorage.setItem(`index${loanIndex}`, loanIndex);
+        sessionStorage.setItem(`balance${loanIndex}`, loanBalance);
+        sessionStorage.setItem(`interest${loanIndex}`, loanInterest);
+        sessionStorage.setItem(`lender${loanIndex}`, loanLender);
 
       });
       displayLendeeLoans(data.loans);
@@ -102,6 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 `;
       loans.forEach((loan, index) => {
+        var options = { year: "numeric", month: "2-digit", day: "2-digit" };
+        const formattedStartDate = new Date(loan.amortization_data.startDate).toLocaleDateString("en-US", options);
+        const formattedendDate = new Date(loan.amortization_data.endDate).toLocaleDateString("en-US", options);
+        const formattedDate = new Date(loan.loan_date).toLocaleDateString("en-US", options);
+
         const amortization_data = loan.amortization_data;
         console.log('amortization_data:', JSON.stringify(amortization_data, null, 2));
         console.log(amortization_data);
@@ -119,39 +128,107 @@ document.addEventListener('DOMContentLoaded', () => {
                   <p><strong>Principal:</strong> $${loan.loan_amount}</p>
                 </div>
               </div>
-              <p><a id="viewLoan" href="#" onclick="loandetails.classList.remove('hidden')">View more details</a></p>
+              <p><a id="viewLoan" href="#0" onclick="document.getElementById('loandetails${index + 1}').classList.remove('hidden')">View more details</a></p>
             </div> 
 
-            <div class="hidden" id="loandetails">
-            <p><a id="X" href="#" onclick="document.getElementById('loandetails').classList.add('hidden')">X</a></p>
-                <div>
-                  <p><strong>Lendee:</strong> ${loan.lendee_full_name}</p>
-                </div>
-                <div>
-                  <p><strong>Interest Rate:</strong> ${loan.annual_interest}%</p>
-                </div>
-                <div>
-                  <p><strong>Principal:</strong> $${loan.loan_amount}</p>
-                </div>
-            </div> `
+            <div class="hidden loanDetails" id="loandetails${index + 1}">
+            <p><a id="X" href="#0"  onclick="document.getElementById('loandetails${index + 1}').classList.add('hidden')">X</a></p>
+                  <p><strong>Date:</strong> ${formattedDate}</p>
+                  <p><strong>Monthly Payment:</strong> ${loan.amortization_data.periodicPayment.toFixed(2)}</p>
+                  <p><strong>Repayment Start Data:</strong> ${formattedStartDate}</p>
+                  <p><strong>Payoff Date:</strong> ${formattedendDate}</p>
+                  <p><strong>Interest To Accrue:</strong> $${loan.amortization_data.totalInterest.toFixed(2)}</p>
+
+            <div>
+            <h2>Amortization Table</h2>
+            <table id="amorTable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Total payment amount</th>
+                        <th>Amount to interest</th>
+                        <th>Amount to principal</th>
+                        <th>Remaining loan balance</th>
+                        <th>Payment Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+          </div>
+        </div> `
           ;
       });
     }
     activeLoans.innerHTML = html;
 
-  }
+    var options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    const scheduleTable = document.getElementById('amorTable');
+    const tableBody = scheduleTable.querySelector('tbody');
+
+    loans.forEach((loan) => {
+      console.log('ok');
+      console.log(loan.amortization_data.schedule);
+      loan.amortization_data.schedule.forEach((item, index) => {
+        console.log(`Loan #${index + 1}:`);
+        console.log(`Principal: ${item.principal.toFixed(2)}`);
+        console.log(`Interest: ${item.interest.toFixed(2)}`);
+        // Add other properties you want to display here
+      });
+    });
+
+
+    loans.forEach((loan) => {
+      loan.amortization_data.schedule.forEach((item, index) => {
+        const row = document.createElement('tr');
+
+        const indexCell = document.createElement('td');
+        indexCell.textContent = `Payment #` + (index + 1);
+        row.appendChild(indexCell);
+
+        const totalCell = document.createElement('td');
+        totalCell.textContent = `$` + (item.interest + item.principal).toFixed(2);
+        row.appendChild(totalCell);
+
+        const interestCell = document.createElement('td');
+        interestCell.textContent = `$` + item.interest.toFixed(2);
+        row.appendChild(interestCell);
+
+        const principalCell = document.createElement('td');
+        principalCell.textContent = `$` + item.principal.toFixed(2);
+        row.appendChild(principalCell);
+
+        const remainingBalanceCell = document.createElement('td');
+        remainingBalanceCell.textContent = `$` + item.remainingBalance.toFixed(2);
+        row.appendChild(remainingBalanceCell);
+
+        const dateCell = document.createElement('td');
+        const formatteditemDate = new Date(item.date).toLocaleDateString("en-US", options);
+        dateCell.textContent = formatteditemDate;
+        row.appendChild(dateCell);
+
+        tableBody.appendChild(row);
+      });
+    })
+  };
 
   function displayLendeeLoans(loans) {
     let lendeehtml = '';
     if (loans.length === 0) {
       lendeehtml = ' <div> <p>No lendee loans found.</p></div>';
     } else {
+
       lendeehtml += `
         <div class="activeLoansHeader">
             <div class="headerContent"> <h2>Total To Pay:</h2> <p> $6000</p></div>
             <div class="headerContent"> <h2>Interest Saved to Date:</h2> <p> $1000</p></div>
         </div>`;
       loans.forEach((loan, index) => {
+        var options = { year: "numeric", month: "2-digit", day: "2-digit" };
+        const formattedStartDate = new Date(loan.amortization_data.startDate).toLocaleDateString("en-US", options);
+        const formattedendDate = new Date(loan.amortization_data.endDate).toLocaleDateString("en-US", options);
+        const formattedDate = new Date(loan.loan_date).toLocaleDateString("en-US", options);
+
         lendeehtml += `
             <div class="loan">
               <h2>Loan #${index + 1}</h2>
@@ -171,31 +248,112 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
               <div class="loanActions">
               <p><a id="viewLoan" href="#0" onclick="document.getElementById('loandeets${index + 1}').classList.remove('hidden')">View more details</a></p>
-                <form action="makepayment.html">
-                  <button id="makePaymentButton" data-loan-index="${index + 1}" type="submit">Make a payment</button>
+                <form class="makePaymentForm">
+                  <input type="hidden" name="loanIndex" value="${index + 1}">
+                  <button class="makePaymentButton" id="makePaymentButton${index + 1}" type="submit">Make a payment</button>
                 </form>
               </div>
             </div>
 
-            <div class="" id="loandeets${index + 1}">
-            <p><a id="X" href="#0"  onclick="document.getElementById('loandeets${index + 1}').classList.add('hidden')">X</a></p>
+            <div class="hidden loanDetails" id="loandeets${index + 1}">
+              <p><a id="X" href="#0"  onclick="document.getElementById('loandeets${index + 1}').classList.add('hidden')">X</a></p>
+              <p><strong>Date:</strong> ${formattedDate}</p>
+              <p><strong>Monthly Payment:</strong> $${loan.amortization_data.periodicPayment.toFixed(2)}</p>
+              <p><strong>Repayment Start Date:</strong> ${formattedStartDate}</p>
+              <p><strong>Payoff Date:</strong> ${formattedendDate}</p>
+              <p><strong>Interest To Accrue:</strong> $${loan.amortization_data.totalInterest.toFixed(2)}</p>
+              <p><strong> Schedule:</strong> </p>
+
               <div>
-                <p><strong>Lendee:</strong> ${loan.lendee_full_name}</p>
+                <h2>Amortization Table</h2>
+                <table id="amorTable">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Total payment amount</th>
+                            <th>Amount to interest</th>
+                            <th>Amount to principal</th>
+                            <th>Remaining loan balance</th>
+                            <th>Payment Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
               </div>
-              <div>
-                <p><strong>Interest Rate:</strong> ${loan.annual_interest}%</p>
-              </div>
-              <div>
-                <p><strong>Principal:</strong> $${loan.loan_amount}</p>
-              </div>
-          </div> `
+            </div> `
           ;
       });
     }
     activeLoans.innerHTML = lendeehtml;
 
+    const makePaymentForms = document.querySelectorAll(".makePaymentForm");
+    makePaymentForms.forEach((form) => {
+      form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent the default form submission
 
-  }
+        // Get the loanIndex from the hidden input field within the form
+        const inputField = form.querySelector('input[name="loanIndex"]');
+        const loanIndex = inputField.value;
+        console.log(loanIndex);
+
+        // Construct the URL with the loanIndex as a parameter
+        const url = `makepayment.html?loanIndex=${loanIndex}`;
+
+        // Redirect to the new URL
+        window.location.href = url;
+      });
+    });
+
+    var options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    const scheduleTable = document.getElementById('amorTable');
+    const tableBody = scheduleTable.querySelector('tbody');
+
+    loans.forEach((loan) => {
+      console.log('ok');
+      console.log(loan.amortization_data.schedule);
+      loan.amortization_data.schedule.forEach((item, index) => {
+        console.log(`Loan #${index + 1}:`);
+        console.log(`Principal: ${item.principal.toFixed(2)}`);
+        console.log(`Interest: ${item.interest.toFixed(2)}`);
+        // Add other properties you want to display here
+      });
+    });
+
+
+    loans.forEach((loan) => {
+      loan.amortization_data.schedule.forEach((item, index) => {
+        const row = document.createElement('tr');
+
+        const indexCell = document.createElement('td');
+        indexCell.textContent = `Payment #` + (index + 1);
+        row.appendChild(indexCell);
+
+        const totalCell = document.createElement('td');
+        totalCell.textContent = `$` + (item.interest + item.principal).toFixed(2);
+        row.appendChild(totalCell);
+
+        const interestCell = document.createElement('td');
+        interestCell.textContent = `$` + item.interest.toFixed(2);
+        row.appendChild(interestCell);
+
+        const principalCell = document.createElement('td');
+        principalCell.textContent = `$` + item.principal.toFixed(2);
+        row.appendChild(principalCell);
+
+        const remainingBalanceCell = document.createElement('td');
+        remainingBalanceCell.textContent = `$` + item.remainingBalance.toFixed(2);
+        row.appendChild(remainingBalanceCell);
+
+        const dateCell = document.createElement('td');
+        const formatteditemDate = new Date(item.date).toLocaleDateString("en-US", options);
+        dateCell.textContent = formatteditemDate;
+        row.appendChild(dateCell);
+
+        tableBody.appendChild(row);
+      });
+    })
+  };
 
   // Add a separate function to handle sidebar click
   function handleSidebarClick(event) {
