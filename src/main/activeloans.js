@@ -1,21 +1,30 @@
+var keycloak = new Keycloak();
+
+function logoutAndRedirect() {
+  keycloak.logout({ redirectUri: 'http://localhost:8080/dummy-frontend' });
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
   const activeLoans = document.getElementById('activeLoansContent');
 
-  keycloak.init({ onLoad: 'login-required' }).then((auth) => {
-    if (!auth) {
-      console.error('Keycloak authentication failed.');
-      return;
-    }
-    // Keycloak authentication succeeded, now fetch the token
-    console.log(keycloak.token);
-    fetchLenderLoans();
-  }).catch((error) => {
-    console.error('Error initializing Keycloak:', error);
-  });
+
+  window.onload = function () {
+    keycloak.init({ onLoad: 'check-sso',  checkLoginIframe: false}).then(function (authenticated) {
+      console.log(Object.entries(keycloak));
+      if (authenticated) {
+        console.log("authenticated");
+        fetchLenderLoans();
+      } else {
+        console.log("nope");
+      }
+    });
+  };
 
   async function fetchLenderLoans() {
     try {
       console.log('starting....');
+      
       const response = await fetch('http://localhost:3000/service/lenderLoans', {
         method: 'GET',
         headers: {
@@ -23,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
           Authorization: `Bearer ${keycloak.token}`, // Fix the token format
         }
       });
-      console.log('so...');
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -41,11 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Error fetching lender loans:', error);
       return []; // Return an empty array to handle the case when there are no loans found.
     }
-  }
+  
+}
 
   async function fetchLendeeLoans() {
     try {
       console.log('starting....');
+      
       const response = await fetch('http://localhost:3000/service/lendeeLoans', {
         method: 'GET',
         headers: {
@@ -53,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
           Authorization: `Bearer ${keycloak.token}`, // Fix the token format
         }
       });
+    
       console.log('so...');
 
       if (!response.ok) {
@@ -64,9 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log("let's go");
 
       data.loans.forEach((loan, index) => {
-        console.log(`Loan #${index + 1}:`, loan.amortization_data);
-        console.log(`Loan #${index + 1}:`, loan.amortization_data.balance);
-
         //Use let to declare the loanIndex, loanBalance, loanInterest, and loanLender variables
 
         let loanIndex = index + 1;
@@ -76,8 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         console.log(loanIndex, loanBalance, loanInterest, loanLender);
 
-
-
         // Store the request data in sessionStorage
         sessionStorage.setItem(`index${loanIndex}`, loanIndex);
         sessionStorage.setItem(`balance${loanIndex}`, loanBalance);
@@ -85,9 +91,10 @@ document.addEventListener('DOMContentLoaded', () => {
         sessionStorage.setItem(`lender${loanIndex}`, loanLender);
 
       });
+
       displayLendeeLoans(data.loans);
-      console.log('almost');
-      return data.loans; // 
+
+      return data.loans; 
     } catch (error) {
       console.error('Error fetching lender loans:', error);
       return []; // Return an empty array to handle the case when there are no loans found.
@@ -101,8 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       html += `
             <div class="activeLoansHeader">
-                    <div class="headerContent"><h2>Total Loaned:</h2> <p> $4000</p></div>
-                    <div class="headerContent"><h2>Interest Gained to Date:</h2> <p> $200</p></div>
+                    <div class="headerContent"><h2>Total Loaned:</h2> <p> $...</p></div>
+                    <div class="headerContent"><h2>Interest Gained to Date:</h2> <p> $...</p></div>
                 </div>
                 `;
       loans.forEach((loan, index) => {
@@ -111,9 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const formattedendDate = new Date(loan.amortization_data.endDate).toLocaleDateString("en-US", options);
         const formattedDate = new Date(loan.loan_date).toLocaleDateString("en-US", options);
 
-        const amortization_data = loan.amortization_data;
-        console.log('amortization_data:', JSON.stringify(amortization_data, null, 2));
-        console.log(amortization_data);
         html += `
             <div class="loan">
               <h2>Loan #${index + 1}</h2>
@@ -134,14 +138,14 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="hidden loanDetails" id="loandetails${index + 1}">
             <p><a id="X" href="#0"  onclick="document.getElementById('loandetails${index + 1}').classList.add('hidden')">X</a></p>
                   <p><strong>Date:</strong> ${formattedDate}</p>
-                  <p><strong>Monthly Payment:</strong> ${loan.amortization_data.periodicPayment.toFixed(2)}</p>
+                  <p><strong>Monthly Payment:</strong> $${loan.amortization_data.periodicPayment.toFixed(2)}</p>
                   <p><strong>Repayment Start Data:</strong> ${formattedStartDate}</p>
                   <p><strong>Payoff Date:</strong> ${formattedendDate}</p>
                   <p><strong>Interest To Accrue:</strong> $${loan.amortization_data.totalInterest.toFixed(2)}</p>
 
             <div>
             <h2>Amortization Table</h2>
-            <table id="amorTable">
+            <table id="amorTable${index + 1}">
                 <thead>
                     <tr>
                         <th></th>
@@ -152,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <th>Payment Date</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="amorBody${index + 1}">
                 </tbody>
             </table>
           </div>
@@ -163,22 +167,12 @@ document.addEventListener('DOMContentLoaded', () => {
     activeLoans.innerHTML = html;
 
     var options = { year: "numeric", month: "2-digit", day: "2-digit" };
-    const scheduleTable = document.getElementById('amorTable');
-    const tableBody = scheduleTable.querySelector('tbody');
-
-    loans.forEach((loan) => {
-      console.log('ok');
-      console.log(loan.amortization_data.schedule);
-      loan.amortization_data.schedule.forEach((item, index) => {
-        console.log(`Loan #${index + 1}:`);
-        console.log(`Principal: ${item.principal.toFixed(2)}`);
-        console.log(`Interest: ${item.interest.toFixed(2)}`);
-        // Add other properties you want to display here
-      });
-    });
 
 
-    loans.forEach((loan) => {
+    loans.forEach((loan, index) => {
+      const scheduleTable = document.getElementById(`amorTable${index + 1}`);
+      const tableBody = document.getElementById(`amorBody${index + 1}`);
+
       loan.amortization_data.schedule.forEach((item, index) => {
         const row = document.createElement('tr');
 
@@ -220,8 +214,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       lendeehtml += `
         <div class="activeLoansHeader">
-            <div class="headerContent"> <h2>Total To Pay:</h2> <p> $6000</p></div>
-            <div class="headerContent"> <h2>Interest Saved to Date:</h2> <p> $1000</p></div>
+            <div class="headerContent"> <h2>Total To Pay:</h2> <p> $...</p></div>
+            <div class="headerContent"> <h2>Interest Saved to Date:</h2> <p> $...</p></div>
         </div>`;
       loans.forEach((loan, index) => {
         var options = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -266,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
               <div>
                 <h2>Amortization Table</h2>
-                <table id="amorTable">
+                <table id="amorTable${index + 1}">
                     <thead>
                         <tr>
                             <th></th>
@@ -277,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <th>Payment Date</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="amorBody${index + 1}">
                     </tbody>
                 </table>
               </div>
@@ -306,22 +300,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     var options = { year: "numeric", month: "2-digit", day: "2-digit" };
-    const scheduleTable = document.getElementById('amorTable');
-    const tableBody = scheduleTable.querySelector('tbody');
 
-    loans.forEach((loan) => {
-      console.log('ok');
-      console.log(loan.amortization_data.schedule);
-      loan.amortization_data.schedule.forEach((item, index) => {
-        console.log(`Loan #${index + 1}:`);
-        console.log(`Principal: ${item.principal.toFixed(2)}`);
-        console.log(`Interest: ${item.interest.toFixed(2)}`);
-        // Add other properties you want to display here
-      });
-    });
-
-
-    loans.forEach((loan) => {
+    loans.forEach((loan, index) => {
+      const scheduleTable = document.getElementById(`amorTable${index + 1}`);
+      const tableBody = document.getElementById(`amorBody${index + 1}`);
       loan.amortization_data.schedule.forEach((item, index) => {
         const row = document.createElement('tr');
 
@@ -370,8 +352,5 @@ document.addEventListener('DOMContentLoaded', () => {
   sidebarLinks.forEach(link => {
     link.addEventListener('click', handleSidebarClick);
   });
-
-  // Initially show Lender loans on page load
-  fetchLenderLoans();
 
 });
