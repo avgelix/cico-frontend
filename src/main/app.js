@@ -1,5 +1,22 @@
 var keycloak = new Keycloak();
+
 var serviceUrl = 'http://127.0.0.1:3000/service'
+
+window.onload = function () {
+    const init = keycloak.init({onLoad: 'check-sso', checkLoginIframe: false}).then(function () {
+        console.log(Object.entries(init));
+        if (keycloak.authenticated) {
+            console.log("authenticated");
+            authenticated();
+            window.location.href = 'home.html';
+        } else {
+            console.log("nope");
+            notAuthenticated();
+        }
+
+        document.body.style.display = 'block';
+    });
+}
 
 function notAuthenticated() {
     document.getElementById('not-authenticated').style.display = 'block';
@@ -24,7 +41,6 @@ function getrequest(endpoint) {
         req.open('GET', serviceUrl + '/' + endpoint, true);
 
         if (keycloak.authenticated) {
-            //req.withCredentials = true; // to include credentials (cookies) in the request
             req.setRequestHeader('Authorization', 'Bearer ' + keycloak.token);
         }
 
@@ -36,7 +52,6 @@ function getrequest(endpoint) {
                     try {
                         console.log(req);
                         output.innerHTML = 'Success: ' + JSON.parse(req.responseText).message;
-                        // Process responseData
                     } catch (error) {
                         // Handle the parsing error (e.g., show an error message, fallback to default value, etc.)
                         console.error("There is an error parsing JSON response:", error);
@@ -46,7 +61,6 @@ function getrequest(endpoint) {
                 } else {
                     console.log(req);
                     console.log(req.status + ' ' + req.statusText);
-
                     output.innerHTML = '<span class="error">You do not have the necessary permissions to access Cico this way. Sorry :( </span>';
                 }
             }
@@ -68,9 +82,7 @@ function postrequest(endpoint) {
         req.open('POST', serviceUrl + '/' + endpoint, true);
 
         if (keycloak.authenticated) {
-            //req.withCredentials = true; // to include credentials (cookies) in the request
             req.setRequestHeader('Authorization', 'Bearer ' + keycloak.token);
-            console.log(keycloak.tokenParsed);
 
             req.onreadystatechange = function () {
                 console.log(req.readyState);
@@ -80,31 +92,12 @@ function postrequest(endpoint) {
             req.send();
         };
     }
+
     if (keycloak.authenticated) {
         keycloak.updateToken(30).then(req);
     } else {
         req();
     }
 };
-
-window.onload = function () {
-    const init = keycloak.init({ onLoad: 'check-sso', promiseType: 'native', checkLoginIframeInterval: 1 })
-    console.log(init);
-
-    init.then(function () {
-        if (keycloak.authenticated) {
-            authenticated();
-            console.log("authenticated");
-            window.location.href = 'home.html';
-        } else {
-            console.log("nope");
-            notAuthenticated();
-        }
-
-        document.body.style.display = 'block';
-    });
-
-}
-
 
 keycloak.onAuthLogout = notAuthenticated;
