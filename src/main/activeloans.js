@@ -81,15 +81,20 @@ document.addEventListener('DOMContentLoaded', () => {
         let loanBalance = loan.loan_amount;
         let loanInterest = loan.annual_interest;
         let loanLender = loan.lender_full_name;
+        let loanId = loan.loan_id;
+        let loanPeriodicPayment = loan.amortization_data.periodicPayment;
+        let loanPeriodicInterest = loan.amortization_data.periodicInterest;
 
-        console.log(loanIndex, loanBalance, loanInterest, loanLender);
+        console.log(loanIndex, loanBalance, loanInterest, loanLender, loanId);
 
         // Store the request data in sessionStorage
         sessionStorage.setItem(`index${loanIndex}`, loanIndex);
         sessionStorage.setItem(`balance${loanIndex}`, loanBalance);
         sessionStorage.setItem(`interest${loanIndex}`, loanInterest);
         sessionStorage.setItem(`lender${loanIndex}`, loanLender);
-
+        sessionStorage.setItem(`id${loanIndex}`, loanId);
+        sessionStorage.setItem(`periodicPayment${loanIndex}`, loanPeriodicPayment);
+        sessionStorage.setItem(`periodicInterest${loanIndex}`, loanPeriodicInterest);
       });
 
       displayLendeeLoans(data.loans);
