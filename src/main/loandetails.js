@@ -27,8 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
       lendee_name,
       amortization_data,
     };
-    /*console.log(typeof (amortization_data));
-    console.log(JSON.parse(amortization_data));*/
 
     // Make the POST request to create the loan
     fetch('http://localhost:3000/service/newLoan', {
@@ -53,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   if (requestData) {
-    fetch('http://localhost:3000/service/createLoan', {
+    fetch('http://localhost:3000/service/createAmor', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

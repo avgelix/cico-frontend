@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const lendeeInput = document.getElementById('lendee').value;
 
 
-    // Create the request payload using user input
+    // Create the request data for the amorTable using user input
     const requestData = {
       monthlyPayment: monthlyPaymentInput,
       method: 'mortgage',
