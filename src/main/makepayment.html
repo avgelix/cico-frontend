@@ -4,8 +4,6 @@
 <head>
     <link rel="stylesheet" type="text/css" href="screen.css">
     <title>Create Loan</title>
-    <script src="keycloak.js"></script>
-    <script src="app.js"></script>
 </head>
 
 <body>
@@ -26,8 +24,8 @@
                         required>
                 </div>
                 <div>
-                    <label for="mySelection">Payment Method:</label>
-                    <select id="mySelection" name="selection">
+                    <label for="paymentMethod">Payment Method:</label>
+                    <select id="paymentMethod" name="paymentMethod">
                         <option value="zelle">Zelle</option>
                         <option value="paypal" selected>Paypal</option>
                         <option value="venmo" selected>Venmo</option>
@@ -43,16 +41,16 @@
             <div id="thisloan" class="loan paymentLoan">
             </div>
         </div>
-        <form id="paymentNotes">
-                <label for="myTextField">Payment Notes:</label>
-                <input type="text" id="myTextField" name="text_field_name" size="60">
+        <form id="paymentText">
+                <label for="paymentNotes">Payment Notes:</label>
+                <input type="text" id="paymentNotes" name="paymentNotes" size="60">
         </form>
 
         
 
 
 
-        <div id="paymentContainer">
+        <div id="paymentContainer"  class="hidden">
             <!-- TODO: display response from POST request about how much of the payment amount goes to interest/principal -->
         </div>
 
@@ -74,12 +72,13 @@
             </table>
         </div>
 
-        <form action="paymentsuccess.html">
-            <button type="submit">Confirm Payment ></button>
+        <form id="paymentSuccess" action="paymentsuccess.html" class="hidden">
+            <button id="payButton" type="submit">Confirm Payment ></button>
         </form>
 
     </main>
-
+    <script src="keycloak.js"></script>
+    <script src="app.js"></script>
     <script src="makepayment.js"></script>
 </body>
 
