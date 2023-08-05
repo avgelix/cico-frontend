@@ -325,9 +325,15 @@
 
  #paymentNotes {
   margin-top: 0;
-  margin-bottom: 150px;
+  margin-bottom: 50px;
  }
 
+ #paymentContainer {
+  margin-bottom: 100px;
+  padding-left: 100px;
+ }
+ 
+ 
  .bold {
    font-weight: 600;
  }
