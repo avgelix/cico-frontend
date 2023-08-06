@@ -1,41 +1,41 @@
-    // Get the loan index from the URL
-    var loanIndex = getParameterByName('loanIndex');
-    let debounceTimer;
-    let initialValue;
-    let inputText;
-    var amorTable = document.getElementById('paymentAmort');
-    var paymentinfo = document.getElementById('paymentContainer');
-    var paymentButton = document.getElementById('paymentSuccess');
-    var amorData = {};
-    var interest;
-    var principal;
+// Get the loan index from the URL
+var loanIndex = getParameterByName('loanIndex');
+let debounceTimer;
+let initialValue;
+let inputText;
+var amorTable = document.getElementById('paymentAmort');
+var paymentinfo = document.getElementById('paymentContainer');
+var paymentButton = document.getElementById('paymentSuccess');
+var amorData = {};
+var interest;
+var principal;
 
-    const thisLoan = document.getElementById('thisloan');
+const thisLoan = document.getElementById('thisloan');
 
-    // Assuming the 'payment' input field is triggering the displayDetails function
-    const paymentInput = document.getElementById('payment');
-    paymentInput.addEventListener('input', hideStuff);
-    paymentInput.addEventListener('input', displayDetails);
+// Assuming the 'payment' input field is triggering the displayDetails function
+const paymentInput = document.getElementById('payment');
+paymentInput.addEventListener('input', hideStuff);
+paymentInput.addEventListener('input', displayDetails);
 
-    // Get the current date
-    const today = new Date();
-    // Add one month to the current date
-    const oneMonthFromToday = new Date(today);
-    oneMonthFromToday.setMonth(oneMonthFromToday.getMonth() + 1);
+// Get the current date
+const today = new Date();
+// Add one month to the current date
+const oneMonthFromToday = new Date(today);
+oneMonthFromToday.setMonth(oneMonthFromToday.getMonth() + 1);
 
-    //retrieve loan details from session storage
-    const loanIndexToRetrieve = loanIndex;
-    const retrievedLoanIndex = sessionStorage.getItem(`index${loanIndexToRetrieve}`);
-    const retrievedBalance = sessionStorage.getItem(`balance${loanIndexToRetrieve}`);
-    const retrievedInterest = sessionStorage.getItem(`interest${loanIndexToRetrieve}`);
-    const retrievedLender = sessionStorage.getItem(`lender${loanIndexToRetrieve}`);
-    const retrievedId = sessionStorage.getItem(`id${loanIndexToRetrieve}`);
-    const retrievedPeriodicPayment = sessionStorage.getItem(`periodicPayment${loanIndexToRetrieve}`);
-    const retrievedPeriodicInterest = sessionStorage.getItem(`periodicInterest${loanIndexToRetrieve}`);
-    const date = oneMonthFromToday;
+//retrieve loan details from session storage
+const loanIndexToRetrieve = loanIndex;
+const retrievedLoanIndex = sessionStorage.getItem(`index${loanIndexToRetrieve}`);
+const retrievedLatestBalance = sessionStorage.getItem(`latestBalance${loanIndexToRetrieve}`);
+const retrievedInterest = sessionStorage.getItem(`interest${loanIndexToRetrieve}`);
+const retrievedLender = sessionStorage.getItem(`lender${loanIndexToRetrieve}`);
+const retrievedId = sessionStorage.getItem(`id${loanIndexToRetrieve}`);
+const retrievedPeriodicPayment = sessionStorage.getItem(`periodicPayment${loanIndexToRetrieve}`);
+const retrievedPeriodicInterest = sessionStorage.getItem(`periodicInterest${loanIndexToRetrieve}`);
+const date = oneMonthFromToday;
 
-    //display retrieved loan details
-    const html = `
+//display retrieved loan details
+const html = `
         <h2>Loan #${retrievedLoanIndex}</h2>
         <div class="loanInfo">
             <div>
@@ -45,15 +45,15 @@
                 <p><strong>Interest Rate:</strong> <br> ${retrievedInterest}%</p>
             </div>
             <div>
-                <p><strong>Principal:</strong> <br> $${retrievedBalance}</p>
+                <p><strong>Principal:</strong> <br> $${retrievedLatestBalance}</p>
             </div>
         </div> `;
 
-    thisLoan.innerHTML = html;
+thisLoan.innerHTML = html;
 
 
-    const paymentForm = document.getElementById('paymentSuccess');
-    console.log('Script loaded. Finding payment form...');
+const paymentForm = document.getElementById('paymentSuccess');
+console.log('Script loaded. Finding payment form...');
 
 //FUNCTIONS 
 
@@ -83,153 +83,185 @@ function doSomething() {
 
     initialValue = inputText;
 
+
     // Display Amor Table
+
+    //inputText= parseInt(String(inputText).trim(), 10);
+
     if (inputText !== '') {
+
         // Input value is not empty
         console.log('Input value is not empty:', inputText);
 
         //calculte percentage of payment to interest and percentage of payment to balance
-        interest = (parseInt(retrievedBalance) * (parseInt(retrievedInterest) / 12)).toFixed(2)
+        interest = (parseInt(retrievedLatestBalance) * (parseInt(retrievedInterest) / 12)).toFixed(2)
         principal = (parseInt(inputText) - parseInt(interest)).toFixed(2);
 
         console.log('Input value:', inputText);
         console.log('Interest:', interest);
-        console.log('Principal:', principal);
+        console.log('Balance:', principal);
 
-        amorData = {};
+        console.log('payment amount', parseInt(inputText));
+        console.log('latest balance', parseInt(retrievedLatestBalance));
 
-        if (principal < 0) {
-            principal = 0;
-        };
-
-        if (inputText < interest) {
-            var added = interest - inputText;
-            console.log(added);
-            interest = parseInt(inputText);
-
-            amorData = {
-                monthlyPayment: retrievedPeriodicPayment,
-                method: 'mortgage',
-                apr: retrievedInterest,
-                balance: ((parseInt(retrievedBalance) + added - (2 * (parseInt(inputText)))) * (1 + parseInt(retrievedPeriodicInterest))),
-                loanTerm: Math.ceil(retrievedBalance / retrievedPeriodicPayment),
-                date: date
-            };
-
-            console.log(amorData.balance)
-
+        if (parseInt(inputText) > parseInt(retrievedLatestBalance)) {
+            console.log('input', 'balance');
+            paymentinfo.innerHTML = `
+            <p><strong>Invalid Payment Amount</strong></p>
+            <p>Your payment amount exceeds the remaining loan balance</p>
+            `;
+            paymentinfo.classList.remove('hidden');
         } else {
 
-            amorData = {
-                monthlyPayment: parseInt(retrievedPeriodicPayment),
-                method: 'mortgage',
-                apr: parseInt(retrievedInterest),
-                balance: ((parseInt(retrievedBalance) - (1 * (parseInt(inputText)))) * (1 + parseInt(retrievedPeriodicInterest))),
-                loanTerm: Math.ceil(parseInt(retrievedBalance) / parseInt(retrievedPeriodicPayment)),
-                date: date
+            amorData = {};
+
+            if (principal < 0) {
+                principal = 0;
             };
 
-            console.log(amorData.balance)
-        };
+            if (parseInt(inputText) < interest) {
+                var added = interest - inputText;
+                console.log('added', added);
+                interest = inputText;
 
-        fetch('http://localhost:3000/service/createAmor', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(amorData),
-        })
+                console.log(interest);
 
-            .then((response) => response.json())
-            .then((data) => {
+                amorData = {
+                    monthlyPayment: retrievedPeriodicPayment,
+                    method: 'mortgage',
+                    apr: retrievedInterest,
+                    balance: (parseInt(retrievedLatestBalance) + added - (parseInt(inputText))) * (1 + parseInt(retrievedPeriodicInterest)),
+                    loanTerm: Math.ceil(retrievedLatestBalance / retrievedPeriodicPayment),
+                    date: date
+                };
 
-                //sanity check
-                console.log('Amor Data:', amorData);
-                console.log('Response Data:', data);
+                console.log(amorData.balance)
 
-                const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-                const scheduleTable = document.getElementById('amorTable');
-                const tableBody = scheduleTable.querySelector('tbody');
+            } else {
 
-                const firstrow = document.createElement('tr');
+                amorData = {
+                    monthlyPayment: parseInt(retrievedPeriodicPayment),
+                    method: 'mortgage',
+                    apr: parseInt(retrievedInterest),
+                    balance: (parseInt(retrievedLatestBalance) - parseInt(inputText)), /** (1 + parseInt(retrievedPeriodicInterest)),*/
+                    loanTerm: Math.ceil(parseInt(retrievedLatestBalance) / parseInt(retrievedPeriodicPayment)),
+                    date: date
+                };
 
-                const indexCell = document.createElement('td');
-                indexCell.textContent = `Payment #1`;
-                firstrow.appendChild(indexCell);
+                console.log(amorData.balance)
 
-                const totalCell = document.createElement('td');
-                totalCell.textContent = `$` + inputText;
-                firstrow.appendChild(totalCell);
+            };
 
-                const interestCell = document.createElement('td');
-                interestCell.textContent = `$` + parseInt(interest).toFixed(2);
-                firstrow.appendChild(interestCell);
+            fetch('http://localhost:3000/service/createAmor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(amorData),
+            })
 
-                const principalCell = document.createElement('td');
-                principalCell.textContent = `$` + parseInt(principal).toFixed(2);
-                firstrow.appendChild(principalCell);
+                .then((response) => response.json())
+                .then((data) => {
 
-                const remainingBalanceCell = document.createElement('td');
-                if (added) {
-                    remainingBalanceCell.textContent = `$` + (retrievedBalance - inputText).toFixed(2);
-                } else {
-                    remainingBalanceCell.textContent = `$` + (retrievedBalance - inputText).toFixed(2);
-                }
-                firstrow.appendChild(remainingBalanceCell);
+                    //sanity check
+                    console.log('Amor Data:', amorData);
+                    console.log('Response Data:', data);
 
-                const dateCell = document.createElement('td');
-                dateCell.textContent = today.toLocaleDateString("en-US", options);;
-                firstrow.appendChild(dateCell);
+                    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+                    const scheduleTable = document.getElementById('amorTable');
+                    const tableBody = scheduleTable.querySelector('tbody');
 
-                tableBody.appendChild(firstrow);
+                    inputText = document.getElementById('payment').value;
 
-                data.response.schedule.forEach((item, index) => {
-                    const row = document.createElement('tr');
+                    const firstrow = document.createElement('tr');
 
                     const indexCell = document.createElement('td');
-                    indexCell.textContent = `Payment #` + (index + 2);
-                    row.appendChild(indexCell);
+                    indexCell.textContent = `Payment #1`;
+                    firstrow.appendChild(indexCell);
 
                     const totalCell = document.createElement('td');
-                    totalCell.textContent = `$` + (item.interest + item.principal).toFixed(2);
-                    row.appendChild(totalCell);
+                    console.log(inputText);
+                    totalCell.textContent = `$` + inputText;
+                    firstrow.appendChild(totalCell);
 
                     const interestCell = document.createElement('td');
-                    interestCell.textContent = `$` + item.interest.toFixed(2);
-                    row.appendChild(interestCell);
+                    interestCell.textContent = `$` + parseInt(interest).toFixed(2);
+                    firstrow.appendChild(interestCell);
 
                     const principalCell = document.createElement('td');
-                    principalCell.textContent = `$` + item.principal.toFixed(2);
-                    row.appendChild(principalCell);
+                    principalCell.textContent = `$` + parseInt(principal).toFixed(2);
+                    firstrow.appendChild(principalCell);
 
                     const remainingBalanceCell = document.createElement('td');
-                    remainingBalanceCell.textContent = `$` + item.remainingBalance.toFixed(2);
-                    row.appendChild(remainingBalanceCell);
+                    if (added) {
+                        remainingBalanceCell.textContent = `$` + (amorData.balance);
+                    } else {
+                        remainingBalanceCell.textContent = `$` + (retrievedLatestBalance - inputText).toFixed(2);
+                    }
+                    firstrow.appendChild(remainingBalanceCell);
 
                     const dateCell = document.createElement('td');
-                    const formatteditemDate = new Date(item.date).toLocaleDateString("en-US", options);
-                    dateCell.textContent = formatteditemDate;
-                    row.appendChild(dateCell);
+                    dateCell.textContent = today.toLocaleDateString("en-US", options);;
+                    firstrow.appendChild(dateCell);
 
-                    tableBody.appendChild(row);
-                });
+                    tableBody.appendChild(firstrow);
 
-                amorTable.classList.remove('hidden');
+                    data.response.schedule.forEach((item, index) => {
+                        const row = document.createElement('tr');
 
-            })
-            ;
+                        const indexCell = document.createElement('td');
+                        indexCell.textContent = `Payment #` + (index + 2);
+                        row.appendChild(indexCell);
 
-        paymentinfo.innerHTML = `
+                        const totalCell = document.createElement('td');
+                        totalCell.textContent = `$` + (item.interest + item.principal).toFixed(2);
+                        row.appendChild(totalCell);
+
+
+                        const interestCell = document.createElement('td');
+                        interestCell.textContent = `$` + item.interest.toFixed(2);
+                        row.appendChild(interestCell);
+
+                        const principalCell = document.createElement('td');
+                        principalCell.textContent = `$` + item.principal.toFixed(2);
+                        row.appendChild(principalCell);
+
+                        const remainingBalanceCell = document.createElement('td');
+                        remainingBalanceCell.textContent = `$` + item.remainingBalance.toFixed(2);
+                        row.appendChild(remainingBalanceCell);
+
+                        const dateCell = document.createElement('td');
+                        const formatteditemDate = new Date(item.date).toLocaleDateString("en-US", options);
+                        dateCell.textContent = formatteditemDate;
+                        row.appendChild(dateCell);
+
+                        tableBody.appendChild(row);
+                    });
+
+                    amorTable.classList.remove('hidden');
+
+                })
+                ;
+
+            paymentinfo.innerHTML = `
             <p><strong>Interest:</strong> $${interest}</p>
             <p><strong>Balance:</strong> $${principal}</p>
             `;
-        paymentinfo.classList.remove('hidden');
-        paymentButton.classList.remove('hidden');
+            paymentinfo.classList.remove('hidden');
+
+
+            paymentButton.classList.remove('hidden');
+
+        }
 
     } else {
         // Input value is empty
         console.log('Input value is empty');
     }
+
+    /*console.log('before', inputText);
+    inputText = '';
+    console.log('after', inputText);*/
 }
 
 
@@ -298,17 +330,17 @@ function newPayment() {
 }
 
 
-    paymentForm.addEventListener('submit', (event) => {
-        // Prevent the default form submission behavior
-        event.preventDefault();
+paymentForm.addEventListener('submit', (event) => {
+    // Prevent the default form submission behavior
+    event.preventDefault();
 
-        console.log('prevented a disaster');
+    console.log('prevented a disaster');
 
-        // Call your function and make the POST request
-        newPayment();
-            console.log('now..');
+    // Call your function and make the POST request
+    newPayment();
+    console.log('now..');
 
-            // Submit the form programmatically after your function finishes processing
-            paymentForm.submit();
-        });
+    // Submit the form programmatically after your function finishes processing
+    paymentForm.submit();
+});
 
