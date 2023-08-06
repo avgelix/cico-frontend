@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function newLoan(data) {
     // Get the loan details and lender/lendee names from the user input in the UI
     const loan_amount = `${data.response.balance}`;
+    const latest_balance = loan_amount;
     const annual_interest = `${requestData.apr}`;
     const lender_name = lender;
     const lendee_name = lendee;
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create the request body with the loan details
     const requestBody = {
       loan_amount,
+      latest_balance,
       annual_interest,
       lender_name,
       lendee_name,
