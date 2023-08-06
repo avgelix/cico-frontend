@@ -17,7 +17,7 @@
  td {
    border: 1.5px solid black;
    text-align: left;
-   padding: 8px;
+   padding: 12px;
    font-size: 16px;
  }
 
@@ -121,9 +121,15 @@
    margin-left: 0px;
  }
 
+ ul {
+  padding-left: 20px;
+ }
+
  .sidebar ul {
    padding-left: 0px;
  }
+
+ 
 
  .sidebar ul>li {
    list-style: none;
@@ -294,6 +300,7 @@
    place-content: space-between;
    margin-bottom: 20px;
    margin-top: 0;
+   column-gap: 20px;
  }
 
  .loanActions {
@@ -315,6 +322,28 @@
    gap: 41px;
  }
 
+ #moreLoanDetails {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 60px;
+ }
+
+ table {
+  width: min-content;
+ }
+ 
+ #payments {
+  display: flex;
+  column-gap: 20px;
+  border-bottom: #333;
+  border-bottom-width: 0.5px;
+  border-bottom-style: solid;
+ }
+
+ li {
+  margin-bottom: 20px;
+ }
+
  #paymentDetails>* {
    margin-top: 0;
  }
@@ -332,7 +361,6 @@
   margin-bottom: 100px;
   padding-left: 100px;
  }
- 
  
  .bold {
    font-weight: 600;
