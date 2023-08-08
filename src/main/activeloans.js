@@ -466,55 +466,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Retrieve the last payment object
     const lastPayment = paymentHistory[paymentHistory.length - 1];
-    console.log(JSON.stringify(lastPayment.amortization_data));
+    console.log(JSON.stringify(lastPayment.amortization_data.schedule));
 
-    fetch('http://localhost:3000/service/createAmor', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(lastPayment.amortization_data)
-    })
+    paymentHistory.forEach((payment, index) => {
+      const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+      const scheduleTable = latestAmor;
+      const tableBody = scheduleTable.querySelector('tbody');
+      payment.amortization_data.schedule.forEach((item, index) => {
+        const row = document.createElement('tr');
 
-      .then((response) => response.json())
-      .then((data) => {
+        const indexCell = document.createElement('td');
+        indexCell.textContent = `Payment #` + (index + 1);
+        row.appendChild(indexCell);
 
-        const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-        const scheduleTable = latestAmor;
-        const tableBody = scheduleTable.querySelector('tbody');
+        const totalCell = document.createElement('td');
+        totalCell.textContent = `$` + (item.interest + item.principal).toFixed(2);
+        row.appendChild(totalCell);
 
-        data.response.schedule.forEach((item, index) => {
-          const row = document.createElement('tr');
+        const interestCell = document.createElement('td');
+        interestCell.textContent = `$` + item.interest.toFixed(2);
+        row.appendChild(interestCell);
 
-          const indexCell = document.createElement('td');
-          indexCell.textContent = `Payment #` + (index + 2);
-          row.appendChild(indexCell);
+        const principalCell = document.createElement('td');
+        principalCell.textContent = `$` + item.principal.toFixed(2);
+        row.appendChild(principalCell);
 
-          const totalCell = document.createElement('td');
-          totalCell.textContent = `$` + (item.interest + item.principal).toFixed(2);
-          row.appendChild(totalCell);
+        const remainingBalanceCell = document.createElement('td');
+        remainingBalanceCell.textContent = `$` + item.remainingBalance.toFixed(2);
+        row.appendChild(remainingBalanceCell);
 
-          const interestCell = document.createElement('td');
-          interestCell.textContent = `$` + item.interest.toFixed(2);
-          row.appendChild(interestCell);
+        const dateCell = document.createElement('td');
+        const formatteditemDate = new Date(item.date).toLocaleDateString("en-US", options);
+        dateCell.textContent = formatteditemDate;
+        row.appendChild(dateCell);
 
-          const principalCell = document.createElement('td');
-          principalCell.textContent = `$` + item.principal.toFixed(2);
-          row.appendChild(principalCell);
+        tableBody.appendChild(row);
+      });
 
-          const remainingBalanceCell = document.createElement('td');
-          remainingBalanceCell.textContent = `$` + item.remainingBalance.toFixed(2);
-          row.appendChild(remainingBalanceCell);
-
-          const dateCell = document.createElement('td');
-          const formatteditemDate = new Date(item.date).toLocaleDateString("en-US", options);
-          dateCell.textContent = formatteditemDate;
-          row.appendChild(dateCell);
-
-          tableBody.appendChild(row);
-        });
-      })
-      ;
+    });
 
     let html = '<h2>Payment History</h2> <ul>';
     paymentHistory.forEach((payment) => {

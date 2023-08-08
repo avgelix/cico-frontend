@@ -9,6 +9,7 @@ var paymentButton = document.getElementById('paymentSuccess');
 var amorData = {};
 var interest;
 var principal;
+let paymentAmor;
 
 const thisLoan = document.getElementById('thisloan');
 
@@ -166,6 +167,7 @@ function doSomething() {
                     //sanity check
                     console.log('Amor Data:', amorData);
                     console.log('Response Data:', data);
+                    paymentAmor = data.response;
 
                     const options = { year: "numeric", month: "2-digit", day: "2-digit" };
                     const scheduleTable = document.getElementById('amorTable');
@@ -283,17 +285,16 @@ function hideStuff() {
     }
 }
 
-
-function newPayment() {
+async function newPayment() {
     console.log('called');
+    
     // Get the payment details from the user input in the UI
     const loan_id = retrievedId;
     const payment_amount = document.getElementById('payment').value;
     const payment_date = new Date().toISOString().slice(0, 19).replace('T', ' ');
     const payment_method = document.getElementById('paymentMethod').value;
     const payment_notes = document.getElementById('paymentNotes').value;
-    const amortization_data = amorData;
-
+    const amortization_data = paymentAmor;
 
     // Create the request body with the payment details
     const requestBody = {
@@ -308,27 +309,29 @@ function newPayment() {
     console.log(payment_date);
     console.log(requestBody);
 
-
-    // Make the POST request to record the payment
-    fetch('http://localhost:3000/service/newPayment', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + keycloak.token,
-        },
-        body: JSON.stringify(requestBody),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            // Handle the response from the backend
-            console.log(data); // You can use this data in your UI to display a success message or perform other actions.
-        })
-        .catch((error) => {
-            console.error('Error creating payment:', error);
-            // Handle errors and display an error message to the user if needed.
+    try {
+        // Make the POST request to record the payment
+        const response = await fetch('http://localhost:3000/service/newPayment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + keycloak.token,
+            },
+            body: JSON.stringify(requestBody),
         });
-}
 
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Fetch error: ${response.status} - ${errorText}`);
+        }
+
+        const data = await response.json();
+        console.log(data); // You can use this data in your UI to display a success message or perform other actions.
+    } catch (error) {
+        console.error('Error creating payment:', error);
+        // Handle errors and display an error message to the user if needed.
+    }
+}
 
 paymentForm.addEventListener('submit', (event) => {
     // Prevent the default form submission behavior
@@ -337,10 +340,21 @@ paymentForm.addEventListener('submit', (event) => {
     console.log('prevented a disaster');
 
     // Call your function and make the POST request
-    newPayment();
-    console.log('now..');
+    newPayment() 
+        .then(() => {
+            console.log('now..');
+            
+            // Submit the form programmatically after your function finishes processing
+            paymentForm.submit();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 
-    // Submit the form programmatically after your function finishes processing
-    paymentForm.submit();
+    return false;
 });
+
+
+
+
 
