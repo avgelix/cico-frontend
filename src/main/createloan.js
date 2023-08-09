@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
       method: 'mortgage',
       apr: interestRateInput,
       balance: balanceInput,
-      loanTerm: Math.ceil(balanceInput / monthlyPaymentInput),
+      loanTerm: -Math.log(1 - (((interestRateInput/100)/12) * balanceInput) / monthlyPaymentInput) / Math.log(1 + ((interestRateInput/100)/12)), /*Math.ceil(balanceInput / monthlyPaymentInput)*/
       date: startDateInput
     };
 
