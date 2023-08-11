@@ -17,7 +17,7 @@
 
   <main>
     <h1>Create Loan</h1>
-    <form id="loanTerms">
+    <form id="loanTerms" action="loandetails.html">
       <label for="balance">Loan Amount:</label>
       <input type="number" id="balance" name="balance" placeholder="$" required>
 
@@ -25,13 +25,16 @@
       <input type="number" id="interestRate" name="interestRate" placeholder="%" required>
 
       <label for="lender">Lender:</label>
-      <input type="text" id="lender" name="lender" placeholder="Full Name" required>
+      <input type="text" id="lender" name="lender" placeholder="Full Name" pattern="^[^0-9]*$" required>
+      <span id="LenderNameError" style="color: red;"></span>
 
       <label for="lendee">Lendee:</label>
-      <input type="text" id="lendee" name="lendee" placeholder="Full Name" required>
+      <input type="text" id="lendee" name="lendee" placeholder="Full Name" pattern="^[^0-9]*$" required>
+      <span id="LendeeNameError" style="color: red;"></span>
 
       <label for="monthlyPayment">Monthly Payment Amount:</label>
       <input type="number" id="monthlyPayment" name="monthlyPayment" placeholder="$" required>
+      <span id="monthlyPaymentError" style="color: red;"></span>
 
       <label for="startDate">Repayment Start Date:</label>
       <input type="date" id="startDate" name="startDate" required>
