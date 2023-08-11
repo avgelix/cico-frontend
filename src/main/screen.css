@@ -21,6 +21,16 @@
    font-size: 16px;
  }
 
+ .FYI {
+   font-size: 14px;
+   text-align: right;
+   font-weight: bold;
+   margin:0;
+   margin-bottom: 20px;
+   color: darkgreen;
+   font-family: math;
+ }
+
  th {
    background-color: lightgrey;
  }
@@ -122,14 +132,14 @@
  }
 
  ul {
-  padding-left: 20px;
+   padding-left: 20px;
  }
 
  .sidebar ul {
    padding-left: 0px;
  }
 
- 
+
 
  .sidebar ul>li {
    list-style: none;
@@ -300,7 +310,7 @@
    place-content: space-between;
    margin-bottom: 20px;
    margin-top: 0;
-   column-gap: 20px;
+   column-gap: 15px;
  }
 
  .loanActions {
@@ -323,25 +333,25 @@
  }
 
  #moreLoanDetails {
-  display: flex;
-  justify-content: space-between;
-  column-gap: 60px;
+   display: flex;
+   justify-content: space-between;
+   column-gap: 60px;
  }
 
  table {
-  width: min-content;
+   width: min-content;
  }
- 
+
  #payments {
-  display: flex;
-  column-gap: 20px;
-  border-bottom: #333;
-  border-bottom-width: 0.5px;
-  border-bottom-style: solid;
+   display: flex;
+   column-gap: 20px;
+   border-bottom: #333;
+   border-bottom-width: 0.5px;
+   border-bottom-style: solid;
  }
 
  li {
-  margin-bottom: 20px;
+   margin-bottom: 20px;
  }
 
  #paymentDetails>* {
@@ -353,15 +363,15 @@
  }
 
  #paymentNotes {
-  margin-top: 0;
-  margin-bottom: 50px;
+   margin-top: 0;
+   margin-bottom: 50px;
  }
 
  #paymentContainer {
-  margin-bottom: 100px;
-  padding-left: 100px;
+   margin-bottom: 100px;
+   padding-left: 100px;
  }
- 
+
  .bold {
    font-weight: 600;
  }
@@ -379,8 +389,16 @@
    margin-bottom: 0;
  }
 
- .loanDetails{
-  margin-bottom: 50px;
-  font-size: 16px;
-  padding: 20px;
+ .loanDetails {
+   margin-bottom: 50px;
+   font-size: 16px;
+   margin-top: 0;
+   padding-right: 50px;
+   padding-left: 50px;
+   padding-bottom: 10px;
+   padding-top: 20px;
+   background-color: whitesmoke;
+   border-bottom: #333;
+   border-bottom-width: 0.5px;
+   border-bottom-style: solid;
  }
