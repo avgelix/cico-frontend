@@ -144,9 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <div class="hidden loanDetails" id="loandetails${index + 1}">
             <p><a id="X" href="#0"  onclick="document.getElementById('loandetails${index + 1}').classList.add('hidden')">X</a></p>
-                  <p><strong>Date:</strong> ${formattedDate}</p>
+                  <p><strong>Loan Date:</strong> ${formattedDate}</p>
                   <p><strong>Outstanding Principal:</strong> $${loan.latest_balance}/$${loan.loan_amount} </p>                  <p><strong>Monthly Payment:</strong> $${loan.amortization_data.periodicPayment.toFixed(2)}</p>
-                  <p><strong>Repayment Start Data:</strong> ${formattedStartDate}</p>
+                  <p><strong>Repayment Start Date:</strong> ${formattedStartDate}</p>
                   <p><strong>Payoff Date:</strong> ${formattedendDate}</p>
                   <p><strong>Interest To Accrue:</strong> $${loan.amortization_data.totalInterest.toFixed(2)}</p>
 
@@ -252,12 +252,33 @@ document.addEventListener('DOMContentLoaded', () => {
       lendeehtml = ' <div> <p>No lendee loans found.</p></div>';
     } else {
       const totalToPay = loans.reduce((total, loan) => total + loan.latest_balance, 0);
+      let total_interest_saved;
+      loans.forEach((loan) => {
+
+        var loanAmount = loan.loan_amount;   //Principal loan amount
+        var averageApr = 11.29 // Annual interest rate
+        var averagePeriodicInterest = (averageApr / 12) / 100  // Monthly interest rate
+        var averagePeriods = loan.amortization_data.periods  // Number of months
+
+        //Calculate monthly payment using the formula
+        M = (loanAmount * averagePeriodicInterest) / (1 - (1 + averagePeriodicInterest) ** -averagePeriods)
+
+        //Calculate total payment
+        var total_payment = M * averagePeriods
+
+        //Calculate total interest
+        total_interest_saved = (total_payment - loanAmount).toFixed(2)
+      });
+      console.log(total_interest_saved);
+
+      const interestSaved = loans.reduce((total, loan) => total + (loan.amortization_data.totalInterest.toFixed(2) - total_interest_saved), 0);
 
       lendeehtml += `
-        <div class="activeLoansHeader">
+        <div class="activeLoansHeader" style="margin-bottom: 0;">
             <div class="headerContent"> <h2>Total To Pay:</h2> <p> $${totalToPay}</p></div>
-            <div class="headerContent"> <h2>Interest Saved to Date:</h2> <p> $...</p></div>
-        </div>`;
+            <div class="headerContent"> <h2>Interest Saved to Date:</h2> <p> $${interestSaved} &#129297</p></div>
+        </div>
+        <p class="FYI">The average interst rate for personal loans in the U.S. is estimated at %11.29</p>`;
       loans.forEach((loan, index) => {
         var options = { year: "numeric", month: "2-digit", day: "2-digit" };
         const formattedStartDate = new Date(loan.amortization_data.startDate).toLocaleDateString("en-US", options);
