@@ -287,7 +287,7 @@ function hideStuff() {
 
 async function newPayment() {
     console.log('called');
-    
+
     // Get the payment details from the user input in the UI
     const loan_id = retrievedId;
     const payment_amount = document.getElementById('payment').value;
@@ -340,10 +340,10 @@ paymentForm.addEventListener('submit', (event) => {
     console.log('prevented a disaster');
 
     // Call your function and make the POST request
-    newPayment() 
+    newPayment()
         .then(() => {
             console.log('now..');
-            
+
             // Submit the form programmatically after your function finishes processing
             paymentForm.submit();
         })

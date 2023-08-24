@@ -1,5 +1,3 @@
- /* some basic CSS styles for the table */
-
  table {
    border-collapse: collapse;
    width: 100%;
@@ -25,7 +23,7 @@
    font-size: 14px;
    text-align: right;
    font-weight: bold;
-   margin:0;
+   margin: 0;
    margin-bottom: 20px;
    color: darkgreen;
    font-family: math;
@@ -138,8 +136,6 @@
  .sidebar ul {
    padding-left: 0px;
  }
-
-
 
  .sidebar ul>li {
    list-style: none;

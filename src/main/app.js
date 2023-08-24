@@ -3,7 +3,7 @@ var keycloak = new Keycloak();
 var serviceUrl = 'http://127.0.0.1:3000/service'
 
 window.onload = function () {
-    const init = keycloak.init({onLoad: 'check-sso', checkLoginIframe: false}).then(function () {
+    const init = keycloak.init({ onLoad: 'check-sso', checkLoginIframe: false }).then(function () {
         console.log(Object.entries(init));
         if (keycloak.authenticated) {
             console.log("authenticated");

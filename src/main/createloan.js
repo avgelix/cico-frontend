@@ -121,26 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Add event listener to the form's submit event
-  /*createLoanForm.addEventListener('submit', (event) => {
-     Prevent the default form submission behavior
-    event.preventDefault();
-
-    console.log('prevented a disaster');
-
-    validateForm(event) 
-    .then(() => {
-        console.log('now..');
-        
-        if (validateForm(true)) {
-        // Submit the form programmatically after your function finishes processing
-        createLoanForm.submit();
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });*/
-
-  // Add event listener to the form's submit event
   createLoanForm.addEventListener('submit', async (event) => {
     // Prevent the default form submission behavior
     event.preventDefault();

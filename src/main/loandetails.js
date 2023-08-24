@@ -14,46 +14,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function newLoan(data) {
     try {
-        // Get the loan details and lender/lendee names from the user input in the UI
-        const loan_amount = `${data.response.balance}`;
-        const latest_balance = loan_amount;
-        const annual_interest = `${requestData.apr}`;
-        const lender_name = lender;
-        const lendee_name = lendee;
-        const amortization_data = data.response;
+      // Get the loan details and lender/lendee names from the user input in the UI
+      const loan_amount = `${data.response.balance}`;
+      const latest_balance = loan_amount;
+      const annual_interest = `${requestData.apr}`;
+      const lender_name = lender;
+      const lendee_name = lendee;
+      const amortization_data = data.response;
 
-        // Create the request body with the loan details
-        const requestBody = {
-            loan_amount,
-            latest_balance,
-            annual_interest,
-            lender_name,
-            lendee_name,
-            amortization_data,
-        };
+      // Create the request body with the loan details
+      const requestBody = {
+        loan_amount,
+        latest_balance,
+        annual_interest,
+        lender_name,
+        lendee_name,
+        amortization_data,
+      };
 
-        // Make the POST request to create the loan
-        const response = await fetch('http://localhost:3000/service/newLoan', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + keycloak.token,
-            },
-            body: JSON.stringify(requestBody),
-        });
+      // Make the POST request to create the loan
+      const response = await fetch('http://localhost:3000/service/newLoan', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + keycloak.token,
+        },
+        body: JSON.stringify(requestBody),
+      });
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Fetch error: ${response.status} - ${errorText}`);
-        }
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Fetch error: ${response.status} - ${errorText}`);
+      }
 
-        const responseData = await response.json();
-        console.log(responseData); // You can use this data in your UI to display a success message or perform other actions.
+      const responseData = await response.json();
+      console.log(responseData); // You can use this data in your UI to display a success message or perform other actions.
     } catch (error) {
-        console.error('Error creating loan:', error);
-        // Handle errors and display an error message to the user if needed.
+      console.error('Error creating loan:', error);
+      // Handle errors and display an error message to the user if needed.
     }
-}
+  }
 
 
 
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
           tableBody.appendChild(row);
         });
 
-        loanAmor= data;
+        loanAmor = data;
       })
       .catch((error) => {
         // Handle any errors that occur during the request
@@ -149,26 +149,18 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('prevented a disaster');
 
     // Call your function and make the POST request
-    newLoan(loanAmor) 
-        .then(() => {
-            console.log('now..');
-            
-            // Submit the form programmatically after your function finishes processing
-            createLoanForm.submit();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    newLoan(loanAmor)
+      .then(() => {
+        console.log('now..');
+
+        // Submit the form programmatically after your function finishes processing
+        createLoanForm.submit();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
 
     return false;
-});
-
-  /* Show the hidden element
-  const showButton = document.getElementById('showButton');
-  const hiddenElement = document.getElementById('hiddenElement');
-
-  showButton.addEventListener('click', () => {
-      hiddenElement.classList.remove('hidden');
-  });*/
+  });
 
 });
