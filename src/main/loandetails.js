@@ -9,9 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const lender = sessionStorage.getItem('lenderInput');
   const lendee = sessionStorage.getItem('lendeeInput');
 
-  console.log(lender);
-  console.log(requestData);
-
   async function newLoan(data) {
     try {
       // Get the loan details and lender/lendee names from the user input in the UI
@@ -48,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const responseData = await response.json();
-      console.log(responseData); // You can use this data in your UI to display a success message or perform other actions.
+      console.log(responseData); //sanity check
     } catch (error) {
       console.error('Error creating loan:', error);
       // Handle errors and display an error message to the user if needed.
@@ -146,13 +143,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Prevent the default form submission behavior
     event.preventDefault();
 
-    console.log('prevented a disaster');
-
-    // Call your function and make the POST request
+    // Call function and make the POST request
     newLoan(loanAmor)
       .then(() => {
-        console.log('now..');
-
         // Submit the form programmatically after your function finishes processing
         createLoanForm.submit();
       })

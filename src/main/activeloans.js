@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function fetchLenderLoans() {
     try {
-      console.log('starting....');
 
       const response = await fetch('http://localhost:3000/service/lenderLoans', {
         method: 'GET',
@@ -38,10 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const data = await response.json();
-      console.log("let's go");
-      data.loans.forEach((loan, index) => {
-        console.log(`Loan #${index + 1}:`, loan);
-      });
       displayLenderLoans(data.loans);
       return data.loans;
     } catch (error) {
@@ -53,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function fetchLendeeLoans() {
     try {
-      console.log('starting....');
 
       const response = await fetch('http://localhost:3000/service/lendeeLoans', {
         method: 'GET',
@@ -63,15 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      console.log('so...');
-
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(`Fetch error: ${response.status} - ${errorText}`);
       }
 
       const data = await response.json();
-      console.log("let's go");
 
       data.loans.forEach((loan, index) => {
         //Use let to declare the loanIndex, loanBalance, loanInterest, and loanLender variables
@@ -269,7 +260,6 @@ document.addEventListener('DOMContentLoaded', () => {
         //Calculate total interest
         total_interest_saved = (total_payment - loanAmount).toFixed(2)
       });
-      console.log(total_interest_saved);
 
       const interestSaved = loans.reduce((total, loan) => total + (loan.amortization_data.totalInterest.toFixed(2) - total_interest_saved), 0);
 
@@ -375,7 +365,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Get the loanIndex from the hidden input field within the form
         const inputField = form.querySelector('input[name="loanIndex"]');
         const loanIndex = inputField.value;
-        console.log(loanIndex);
 
         // Construct the URL with the loanIndex as a parameter
         const url = `makepayment.html?loanIndex=${loanIndex}`;
@@ -474,7 +463,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   function displayPaymentHistory(paymentHistory, paymentHistoryContainer, latestAmor) {
-    console.log('payments loading...');
 
     // Check if there are any payments in the history
     if (paymentHistory.length === 0) {

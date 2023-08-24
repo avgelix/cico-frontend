@@ -54,7 +54,6 @@ thisLoan.innerHTML = html;
 
 
 const paymentForm = document.getElementById('paymentSuccess');
-console.log('Script loaded. Finding payment form...');
 
 //FUNCTIONS 
 
@@ -98,12 +97,6 @@ function doSomething() {
         interest = (parseInt(retrievedLatestBalance) * (parseInt(retrievedInterest) / 12)).toFixed(2)
         principal = (parseInt(inputText) - parseInt(interest)).toFixed(2);
 
-        console.log('Input value:', inputText);
-        console.log('Interest:', interest);
-        console.log('Balance:', principal);
-
-        console.log('payment amount', parseInt(inputText));
-        console.log('latest balance', parseInt(retrievedLatestBalance));
 
         if (parseInt(inputText) > parseInt(retrievedLatestBalance)) {
             console.log('input', 'balance');
@@ -122,10 +115,7 @@ function doSomething() {
 
             if (parseInt(inputText) < interest) {
                 var added = interest - inputText;
-                console.log('added', added);
                 interest = inputText;
-
-                console.log(interest);
 
                 amorData = {
                     monthlyPayment: retrievedPeriodicPayment,
@@ -135,8 +125,6 @@ function doSomething() {
                     loanTerm: Math.ceil(retrievedLatestBalance / retrievedPeriodicPayment),
                     date: date
                 };
-
-                console.log(amorData.balance)
 
             } else {
 
@@ -149,7 +137,6 @@ function doSomething() {
                     date: date
                 };
 
-                console.log(amorData.balance)
 
             };
 
@@ -182,7 +169,6 @@ function doSomething() {
                     firstrow.appendChild(indexCell);
 
                     const totalCell = document.createElement('td');
-                    console.log(inputText);
                     totalCell.textContent = `$` + inputText;
                     firstrow.appendChild(totalCell);
 
@@ -260,10 +246,6 @@ function doSomething() {
         // Input value is empty
         console.log('Input value is empty');
     }
-
-    /*console.log('before', inputText);
-    inputText = '';
-    console.log('after', inputText);*/
 }
 
 
@@ -286,7 +268,6 @@ function hideStuff() {
 }
 
 async function newPayment() {
-    console.log('called');
 
     // Get the payment details from the user input in the UI
     const loan_id = retrievedId;
@@ -306,9 +287,6 @@ async function newPayment() {
         amortization_data,
     };
 
-    console.log(payment_date);
-    console.log(requestBody);
-
     try {
         // Make the POST request to record the payment
         const response = await fetch('http://localhost:3000/service/newPayment', {
@@ -326,7 +304,7 @@ async function newPayment() {
         }
 
         const data = await response.json();
-        console.log(data); // You can use this data in your UI to display a success message or perform other actions.
+        console.log(data); // sanity check
     } catch (error) {
         console.error('Error creating payment:', error);
         // Handle errors and display an error message to the user if needed.
@@ -337,14 +315,11 @@ paymentForm.addEventListener('submit', (event) => {
     // Prevent the default form submission behavior
     event.preventDefault();
 
-    console.log('prevented a disaster');
 
     // Call your function and make the POST request
     newPayment()
         .then(() => {
-            console.log('now..');
-
-            // Submit the form programmatically after your function finishes processing
+            // Submit the form after function finishes processing
             paymentForm.submit();
         })
         .catch(error => {
